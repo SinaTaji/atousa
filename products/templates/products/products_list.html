@@ -1,0 +1,241 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/product_list.css" %}>{% endblock %}
+{% block meta %}
+    {% if request.GET.page or request.GET.ordering or request.GET.color or request.GET.size or request.GET.price %}
+        <link rel="canonical" href="{{ request.path }}">
+    {% else %}
+        <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    {% endif %}
+{% endblock %}
+{% block title %}لیست محصولات{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="mobile-top-bar mobile" id="mobile-filter-bar">
+            <button onclick="openDrawer('filters')">
+                <img src="/static/image/icons/filter.svg" alt=""> فیلترها
+            </button>
+            <button onclick="openDrawer('sort')">
+                <img src="/static/image/icons/order-by.svg" alt=""> مرتب‌سازی
+            </button>
+        </div>
+        <!-- پرده تارکننده -->
+        <div class="overlay mobile" id="overlay" onclick="closeDrawer()"></div>
+
+        <!-- پنل فیلترها -->
+        <div class="drawer drawer-full mobile" id="drawer-filters">
+            <form id="filter-form-mobile" method="get" action="">
+                <div class="drawer-header">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <button id="backBtn" aria-label="بازگشت" type="button">
+                            <img src="/static/image/icons/back.svg" alt="بازگشت">
+                        </button>
+                        <p id="drawerTitle">فیلترها</p>
+                    </div>
+                    <button class="close-btn" onclick="closeDrawer()" aria-label="بستن" type="button">X</button>
+                </div>
+
+                <div class="drawer-body mobile">
+                    <div id="filter-main">
+                        <button type="button" class="filter-btn" data-filter="دسته بندی‌ها">
+                            دسته بندی‌ها
+                            <img src="/static/image/icons/forward.svg" alt="›">
+                        </button>
+                        <button type="button" class="filter-btn" data-filter="رنگ‌ها">
+                            رنگ‌ها
+                            <img src="/static/image/icons/forward.svg" alt="›">
+                        </button>
+                        <button type="button" class="filter-btn" data-filter="جنسیت">
+                            جنسیت
+                            <img src="/static/image/icons/forward.svg" alt="›">
+                        </button>
+                        <button type="button" class="filter-btn" data-filter="قیمت">
+                            قیمت
+                            <img src="/static/image/icons/forward.svg" alt="›">
+                        </button>
+                        <button type="button" class="filter-btn" data-filter="سایز">
+                            سایز
+                            <img src="/static/image/icons/forward.svg" alt="›">
+                        </button>
+                    </div>
+
+                    <div id="filter-detail" class="mobile" style="display:none;">
+                        <div class="filter-content" id="filter-category" style="display:none;">
+                            {% include "home/includes/header_categories.html" %}
+                        </div>
+
+                        <div class="filter-content mobile" id="filter-color" style="display:none;">
+                            <div id="color-filter">
+                                {% for color in colors %}
+                                    <div id="color-wrapper">
+                                        <div>{{ color.title }}</div>
+                                        <div class="option-item" data-value="{{ color.id }}"
+                                             style="background-color: {{ color.hex_color }};">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <input type="hidden" name="color" id="colorInputMobile" value="">
+                        </div>
+                        <div class="filter-content" id="filter-gender" style="display:none;">
+                            <div id="gender-buttons">
+                                <button class="gender-btn boy" type="button" onclick="selectGenderMobile('boys')">پسرانه
+                                </button>
+                                <button class="gender-btn girl" type="button" onclick="selectGenderMobile('girls')">
+                                    دخترانه
+                                </button>
+                            </div>
+                            <input type="hidden" name="gender" id="genderInputMobile" value="">
+                        </div>
+                        <div class="filter-content" id="filter-price" style="display:none;">
+                            <div class="price-filter">
+                                <div class="range-slider">
+                                    <input type="range" id="price_min_mobile" name="price__gt" min="0"
+                                           max="{{ price_max }}" step="10000" value="{{ price_min }}"
+                                           class="filter-input-range">
+                                    <input type="range" id="price_max_mobile" name="price__lt" min="0"
+                                           max="{{ price_max }}" step="10000" value="{{ price_max }}"
+                                           class="filter-input-range">
+                                </div>
+                                <div class="price-values">
+                                    <span>از: <span id="price_min_val_mobile">{{ price_min }}</span> تومان</span>
+                                    <span>تا: <span id="price_max_val_mobile">{{ price_max }}</span> تومان</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-content" id="filter-size" style="display:none;">
+                            <div id="size-filter">
+
+                                {% for size in sizes %}
+                                    <p>
+                                        {{ size.age_min }} تا {{ size.age_max }}
+                                        <input class="checkbox-size-mobile" type="checkbox" name="size"
+                                               value="{{ size.title }}">
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drawer-footer mobile">
+                    <button id="clear-filters-mobile" type="button">لغو فیلترها</button>
+                    <button class="apply-btn" type="button">اعمال فیلتر</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- پنل مرتب‌سازی -->
+        <div class="drawer drawer-half mobile" id="drawer-sort">
+            <div class="drawer-header">
+                <p> مرتب ‌سازی بر اساس</p>
+                <button class="close-btn" onclick="closeDrawer()">X</button>
+            </div>
+            <div class="drawer-body">
+                <button class="sort-btn" data-ordering="-views">محبوب ‌ترین</button>
+                <button class="sort-btn" data-ordering="-created_at">جدید ترین</button>
+                <button class="sort-btn" data-ordering="price">ارزان ‌ترین</button>
+                <button class="sort-btn" data-ordering="-price">گران ‌ترین</button>
+                <button class="sort-btn" data-ordering="-discount">بیشترین تخفیف</button>
+            </div>
+        </div>
+        <div class="sort-menu desktop">
+            <div class="category-dropdown">
+                <div class="dropdown-toggle">دسته‌بندی‌ها</div>
+                <ul class="dropdown-menu">
+                    {% include 'products/partials/_category_list.html' with categories=categories %}
+                </ul>
+            </div>
+            <button class="sort-btn" data-ordering="-views">محبوب ‌ترین</button>
+            <button class="sort-btn" data-ordering="-created_at">جدید ترین</button>
+            <button class="sort-btn" data-ordering="price">ارزان ‌ترین</button>
+            <button class="sort-btn" data-ordering="-price">گران ‌ترین</button>
+            <button class="sort-btn" data-ordering="-discount">بیشترین تخفیف</button>
+        </div>
+        <div>
+
+        </div>
+        <input type="hidden" name="ordering" id="orderingInput">
+        <div class="content-wrapper">
+            <div class="filter-box desktop">
+                <div id="filter-title"><h2>جستجوی پیشرفته</h2></div>
+                <form id="filter-form">
+                    <button id="clear-filters" type="button">لغو فیلترها</button>
+                    <!-- رنگ -->
+                    <div id="filter-title"><h3 id="label-filter">انتخاب رنگ</h3></div>
+                    <div id="color-filter">
+                        <div class="custom-select" id="colorSelect">
+                            <div class="selected-option">همه</div>
+                            <div class="options-list">
+                                <div class="option-item" data-value="all">
+                                    نمایش همه
+                                </div>
+                                {% for color in colors %}
+                                    <div class="option-item" data-value="{{ color.id }}"
+                                         style="background-color: {{ color.hex_color }};">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <input type="hidden" name="color" id="colorInput">
+                    </div>
+
+                    <!-- جنسیت -->
+                    <div class="filter-item">
+                        <h3 id="label-filter">پوشاک</h3>
+                        <div id="gender-buttons">
+                            <button class="gender-btn" id="boy-btn" type="button" onclick="selectGender('boys')">
+                                پسرانه
+                            </button>
+                            <button class="gender-btn" id="girl-btn" type="button" onclick="selectGender('girls')">
+                                دخترانه
+                            </button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="gender" id="gender-input">
+
+                    <!-- سایز -->
+                    <div id="filter-title"><h3 id="label-filter">سایز</h3></div>
+                    <div id="size-filter">
+
+                        {% for size in sizes %}
+                            <p>
+                                <input type="checkbox" name="size" value="{{ size.title }}" onchange="triggerFilter()">
+                                {{ size.age_min }} تا {{ size.age_max }}
+                            </p>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- قیمت -->
+                    <div id="filter-title"><h3 id="label-filter">فیلتر قیمت</h3></div>
+                    <div class="price-filter">
+                        <div class="range-slider">
+                            <input type="range" id="price_min" name="price__gt" min="0" max="{{ price_max }}"
+                                   step="10000"
+                                   value="{{ price_min }}"
+                                   class="filter-input-range">
+                            <input type="range" id="price_max" name="price__lt" min="0" max="{{ price_max }}"
+                                   step="10000"
+                                   value="{{ price_max }}" class="filter-input-range">
+                        </div>
+                        <div class="price-values">
+                            <span>از: <span id="price_min_val">{{ price_min }}</span> تومان</span>
+                            <span>تا: <span id="price_max_val">{{ price_max }}</span> تومان</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="product-list" class="product-grid">
+                {% include 'products/partials/_product_list.html' %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src={% static "js/filter.js" %}></script>{% endblock %}

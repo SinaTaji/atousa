@@ -1,0 +1,279 @@
+#bronze {
+    background-image: url("/static/image/svgs/boronz.svg");
+    box-shadow: 0 4px 20px rgba(157, 108, 0, 0.89);
+    border: inset 2px #b07800;
+}
+
+#bronze img {
+    border: 4px inset #814f00;
+}
+
+#silver {
+    background-image: url("/static/image/svgs/silver.svg");
+    box-shadow: 0 4px 20px rgba(169, 169, 169, 0.89);
+    border: inset 2px #9d9d9d;
+}
+
+#silver img {
+    border: 4px inset #e1e1e1;
+}
+
+#gold {
+    background-image: url("/static/image/svgs/gold.svg");
+    box-shadow: 0 4px 20px rgba(255, 195, 0, 0.89);
+    border: inset 2px #ab8600;
+}
+
+#gold img {
+    border: 4px inset #ffb700;
+}
+
+.profile-card img {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info h2 {
+    margin: 0;
+    font-size: 2rem;
+    padding: 5px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.62);
+    color: #ffffff;
+}
+
+.profile-info p {
+    margin: 6px 0;
+    font-size: 18px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.63);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.stat-box {
+    background: linear-gradient(135deg, #565656, #cb9b00);
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: scale(1.05);
+}
+
+.stat-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.stat-box .value {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.container-panel {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+#monthlyChart {
+    margin-top: 70px;
+}
+
+#charth3 {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.partner-panel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notifs {
+    color: white;
+    position: relative;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-direction: column;
+    max-width: 60%;
+}
+
+.notifs h3 {
+    padding: 5px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.27);
+    font-size: 2rem;
+}
+
+.notifs h2 {
+    font-size: 3rem;
+}
+
+#comissions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cc {
+    color: #ffde5d;
+}
+
+.partner-dashboard {
+    display: flex;
+    max-width: 1600px;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.custom-sidebar {
+    max-height: fit-content;
+    width: 220px;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #ffd057;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.22);
+}
+
+.custom-sidebar h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: #d29800;
+}
+
+.custom-sidebar ul {
+    list-style: none;
+}
+
+.custom-sidebar ul li {
+    padding: 0.7rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    color: #555;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.custom-sidebar ul li:hover {
+    background: #ffb800;
+}
+
+.custom-sidebar ul li a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.custom-sidebar ul li img {
+    width: 30px;
+}
+
+#gifts_count {
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #d20e0e;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.profile-card {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    position: relative;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.progress-bar {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #7e7e7e;
+    overflow: hidden;
+    height: 24px;
+    margin: 8px 0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.37);
+}
+
+.progress-bar .progress-fill {
+    background: linear-gradient(to right, #1d7200, #a5ff87);
+    color: #000000;
+    height: 100%;
+    width: 0;
+    line-height: 24px;
+    padding-right: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.progress-bar.blue .progress-fill {
+    background: linear-gradient(to right, #004434, #7bffe0);
+}
+/*==========================================================*/
+@media (max-width: 768px) {
+    .partner-dashboard{
+        display: block;
+        max-width: 100%;
+    }
+    .custom-sidebar{
+        width: 100%;
+    }
+    .partner-panel{
+        display: block;
+    }
+    .notifs{
+        padding: 5px;
+        max-width: 100%;
+    }
+    .notifs img{
+        border-radius: 10px;
+    }
+    .profile-card{
+        padding: 5px;
+        gap: 5px;
+    }
+    .profile-info h2,.profile-info p{
+        font-size: 16px;
+    }
+    .stat-box .value{
+        font-size: 20px;
+    }
+    .stat-box h3{
+        font-size: 18px;
+    }
+    .profile-card img{
+        width: 180px;
+        height: 180px;
+    }
+}

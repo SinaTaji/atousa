@@ -1,0 +1,71 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/article.css" %}>{% endblock %}
+{% block title %}
+    {{ article.title }} | فروشگاه لباس بچه آتوسا
+{% endblock %}
+
+{% block meta %}
+    <meta name="description"
+          content="{{ article.short_desc|default_if_none:'مقاله مرتبط با لباس بچه و مد در فروشگاه آتوسا' }}">
+    <meta name="keywords" content="لباس بچه, مد کودک, {{ article.title|default:'' }}">
+    <meta name="author" content="آتوسا">
+    <meta name="robots" content="index, follow">
+{% endblock %}
+
+{% block og_title %}{{ article.title }}{% endblock %}
+{% block og_description %}{{ article.short_desc|default:"مقاله مرتبط با لباس بچه و مد کودک" }}{% endblock %}
+{% block og_image %}{% if article.image %}{{ article.image.url }}{% else %}/static/image/articles-cover.jpg
+{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
+
+{% block twitter_title %}{{ article.title }}{% endblock %}
+{% block twitter_description %}{{ article.short_desc|default:"مقاله مرتبط با لباس بچه و مد کودک" }}{% endblock %}
+{% block twitter_image %}{% if article.image %}{{ article.image.url }}{% else %}/static/image/articles-cover.jpg
+{% endif %}{% endblock %}
+
+{% block content %}
+    <div class="article_container">
+        <header class="article-header">
+            <h1>{{ article.title }}</h1>
+            <p class="short-desc">{{ article.short_desc }}</p>
+            {% if article.big_image %}
+                <img src="{{ article.big_image.url }}" alt="{{ article.title }}" class="main-image">
+            {% endif %}
+        </header>
+
+        <section class="article-parts">
+            {% for part in article.article_parts.all %}
+                <div class="article-part-card">
+                    <h2 class="part-title">{{ part.title }}</h2>
+                    {% if part.image %}
+                        <img src="{{ part.image.url }}" alt="{{ part.title }}" class="part-image">
+                    {% endif %}
+                    <p class="part-desc">{{ part.desc }}</p>
+                </div>
+            {% endfor %}
+        </section>
+
+        <h3 id="article-popular">بیشتر بخوانید</h3>
+        <main class="article-grid" id="articleContainer">
+            {% include 'article/article_cards.html' with articles=popular_article %}
+        </main>
+    </div>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "{{ article.title|escapejs }}",
+  "description": "{{ article.short_desc|default:'مقاله مرتبط با لباس بچه و مد کودک'|escapejs }}",
+  "image": "{% if article.image %}{{ article.image.url }}{% else %}
+        https://example.com/static/image/articles-cover.jpg{% endif %}",
+  "author": {
+    "@type": "Person",
+    "name": "آتوسا"
+  },
+  "datePublished": "{{ article.publish_date|date:'Y-m-d' }}",
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+    </script>
+{% endblock %}

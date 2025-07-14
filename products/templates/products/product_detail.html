@@ -1,0 +1,292 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/product_detail.css" %}>
+    <link rel="stylesheet" href={% static "css/swiper-bundle.min.css" %}>{% endblock %}
+{% load price_filters %}
+{% block meta %}
+    <meta name="description" content="{{ product.description|truncatewords:25 }}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ product.title }}">
+    <meta property="og:description"
+          content="{{ product.price|format_price }} - {{ product.description|truncatewords:15 }}">
+    <meta property="og:image" content="{{ full_image_url }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}?ref">
+    <meta property="og:type" content="product">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ product.title }}">
+    <meta name="twitter:description" content="{{ product.description|truncatewords:15 }}">
+    <meta name="twitter:image" content="{{ full_image_url }}">
+{% endblock %}
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+{% block content %}
+    <div class="product-detail-container">
+        <div class="breadcrumb-items mobile">
+            <a id="branch-links" href="/">آتوسا /</a>
+            {% for category in category_ancestors %}
+                <a id="branch-links"
+                   href="{% url 'product_list_page' %}?category={{ category.slug }}">{{ category.title }} / </a>
+            {% endfor %}
+            <div id="m-br">
+                <h4 class="breadcrumb-item ">{{ product.title }} مدل {{ product.model }}</h4>
+                <h4 class="breadcrumb-code ">کد محصول : <span id="code-detail">{{ product.code }}</span></h4>
+            </div>
+        </div>
+        <div id="detail">
+            <div class="product-gallery">
+                <div class="main-image" id="main-image">
+                    <img id="main-product-image" src="{{ gallery_images.0 }}" alt="{{ product.title }}">
+                </div>
+
+                <div class="thumbnail-gallery">
+                    {% for img in gallery_images %}
+                        <img src="{{ img }}" class="thumbnail" data-image="{{ img }}"
+                             alt="تصویر {{ forloop.counter }} از {{ product.title }}">
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="product-info">
+                <div id="top-detail-card">
+                    <div class="product-title-d">
+                        <h1>{{ product.title }}</h1>
+                        <h2>{{ product.model }}</h2>
+                    </div>
+                    <div class="heart-wrapper">
+                        <div style="position: relative;">
+                            <button id="copy-link-btn" class="tooltip-container" data-ref-link="{{ ref_link }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#333"
+                                     viewBox="0 0 24 24" aria-label="اشتراک گذاری">
+                                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.47.09-.7 0-.23-.03-.47-.09-.7l7.02-4.11a2.99 2.99 0 1 0-.91-1.65l-7.02 4.1a3 3 0 1 0 0 4.58l7.02 4.11a3 3 0 1 0 .91-1.65z"/>
+                                </svg>
+                                <span class="tooltip-text desktop">اشتراک گذاری کالا</span>
+                            </button>
+                            <div id="copy-message">
+                                لینک کپی شد! می‌توانید با دوستانتون به اشتراک بگذارید.
+                            </div>
+                        </div>
+                        <div id="heart-path" class="tooltip-container">
+                            <button id="favorite-btn"
+                                    data-product-id="{{ product.id }}"
+                                    class="favorite-btn"
+                                    aria-label="افزودن به علاقه‌مندی‌ها">
+
+                                <svg id="heart-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                     viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"
+                                     stroke-linecap="round" stroke-linejoin="round"
+                                     class="{% if is_favorited %}favorited{% endif %}">
+                                    <path d="M20.8 4.6c-1.5-1.5-4-1.5-5.5 0L12 7.9 8.7 4.6c-1.5-1.5-4-1.5-5.5 0s-1.5 4 0 5.5l3.3 3.3L12 20l5.5-6.6 3.3-3.3c1.5-1.5 1.5-4 0-5.5z"/>
+                                </svg>
+                            </button>
+                            <span class="tooltip-text desktop">افزودن به علاقه‌مندی‌ها</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="breadcrumb-items desktop">
+                    <a id="branch-links" href="/">آتوسا /</a>
+                    {% for category in category_ancestors %}
+                        <a id="branch-links"
+                           href="{% url 'product_list_page' %}?category={{ category.slug }}">{{ category.title }} / </a>
+                    {% endfor %}
+                    <h4 class="breadcrumb-item ">{{ product.title }} مدل {{ product.model }}</h4>
+                    <h4 class="breadcrumb-code ">کد محصول : <span id="code-detail">{{ product.code }}</span></h4>
+                </div>
+                <a class="mobile" href="#" id="size-guide-link">راهنمای انتخاب سایز</a>
+                <div id="detail-dec">
+                    <div class="product-description">
+                        {{ product.description }}
+                    </div>
+                    <a class="desktop" href="#" id="size-guide-link">راهنمای انتخاب سایز</a>
+                </div>
+
+                <!-- سایز ها -->
+
+                <div class="product-sizes">
+                    <h3 id="color-size">سایز: </h3>
+                    {% for size in all_sizes %}
+                        <button class="size-button" data-size-id="{{ size.id }}">{{ size.title }}</button>
+                    {% endfor %}
+                </div>
+
+
+                <!-- رنگ‌ها -->
+                <div class="product-colors">
+                    <h3 id="color-size">رنگ :</h3>
+                    <div id="color-container">
+
+                        {% for variant in color_variants %}
+                            <button class="color-swatch tooltip-container"
+                                    data-color-id="{{ variant.color.id }}"
+                                    data-image-url="{{ variant.image.url }}"
+                                    style="background-color: {{ variant.color.hex_color }};">
+                                <span class="tooltip-text desktop">{{ variant.color.title }}</span>
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if product.is_active %}
+                    <div class="product-price">
+                        <span id="discount-badge" class="discount-badge"
+                              style="{% if not product.has_discount %}display:none;{% endif %}">
+                            ٪{{ product.discount }} تخفیف
+                        </span>
+
+                        <div id="d-p" style="{% if not product.has_discount %}display:none;{% endif %}">
+                        <span id="discounted-price" class="discounted">
+                            {{ product.get_discounted_price|format_price }}
+                        </span>
+                            <span id="original-price" class="original">
+                            {{ product.price|format_price }}
+                        </span>
+                        </div>
+
+                        <span id="normal-price" class="normal"
+                              style="{% if product.has_discount %}display:none;{% endif %}">
+                        {{ product.price|format_price }}
+                    </span>
+                    </div>
+                    <div id="price-section">
+                        <div id="purchas">
+                            <div class="quantity-input">
+                                <h3 id="qu" class="desktop">تعداد : </h3>
+                                <button class="decrease">−</button>
+                                <input type="number" name="quantity" id="quantity" min="1" max="5" value="1"/>
+                                <button class="increase">+</button>
+                            </div>
+                            <div id="purchas-btn">
+                                <button class="add-to-cart-btn">
+                                    افزودن به سبد خرید
+                                    <img src="/static/image/icons/add-to-the-cart-svgrepo-com.svg"
+                                         alt="آیکون افزودن به سبد خرید"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div id="detail-0">
+                        <a href="#">
+                            <h2 class="{% url 'contact_page' %}">موجود شد خبرم کن</h2>
+                            <img src="/static/image/icons/no-stock.svg" alt="ناموجود">
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="features">
+                <div class="feature-item">
+                    <img src="/static/image/icons/wallet-svgrepo-com.svg" alt="پرداخت مطمئن"/>
+                    <p> اطمینان در پرداخت </p>
+                </div>
+                <div class="feature-item">
+                    <img src="/static/image/icons/24-hours-svgrepo-com.svg" alt="پشتیبانی عالی"/>
+                    <p>پشتیبانی حرفه‌ای </p>
+                </div>
+                <div class="feature-item">
+                    <img src="/static/image/icons/truck-deliver-svgrepo-com.svg" alt="ارسال سریع"/>
+                    <p>ارسال فوری به سراسر کشور</p>
+                </div>
+                <div class="feature-item">
+                    <img src="/static/image/icons/package-checking-delivery-svgrepo-com.svg"
+                         alt="ضمانت اصالت کالا"/>
+                    <p>ضمانت اصالت کالا</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slider-wrapper">
+            <div class="slider_d mobile-v-slider" id="similar_slider">
+                <h2>محصولات مشابه</h2>
+                <a href="{% url 'product_list_page' %}"><h5>مشاهده همه</h5><img
+                        src="/static/image/arrow.svg"
+                        alt="فلش مشاهده همه محصولات"></a>
+            </div>
+            <div class="sliders">
+                {% include 'products/partials/slider_cards_partial.html' with products=similar %}
+            </div>
+        </div>
+
+        <div id="size-guide-target"></div>
+        <div class="measurement-tables">
+            <h3 id="size-guid">احتمال خطای 1 الی 3 سانت را در نظر بگیرید</h3>
+            {% for pm in product_measurements %}
+                <div class="measurement-block">
+                    <div class="table-container">
+                        <table class="measurement-table">
+                            <thead>
+                            <h4 class="measurement-title">
+                                {{ pm.preset.clothing_part.name }} - سایز {{ pm.preset.size.title }}
+                            </h4>
+                            <tr>
+                                <th>جزئیات</th>
+                                <th>اندازه</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <td>جنس</td>
+                            <td>{{ product.get_material_display }}</td>
+                            {% for item in pm.preset.items.all %}
+                                <tr>
+                                    <td>{{ item.attribute.name }}</td>
+                                    <td>{{ item.value }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="image-modal" class="image-modal hidden">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <img id="modal-main-image" src="" alt="">
+                <div class="modal-thumbnail-gallery">
+                    {% for img in gallery_images %}
+                        <img src="{{ img }}" class="modal-thumbnail" onclick="changeMainImage(this.src)">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#==========================================================#}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "{{ product.title|escapejs }} مدل {{ product.model|escapejs }}",
+  "image": [
+        {% for img in gallery_images %}
+            "{{ img }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+        ],
+        "description": "{{ product.description|truncatewords:30|escapejs }}",
+  "sku": "{{ product.code }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "آتوسا"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
+    "priceCurrency": "IRR",
+    "price": "{{ product.get_discounted_price|default:product.price }}",
+    "availability": "{% if product.is_active %}https://schema.org/InStock{% else %}
+        https://schema.org/OutOfStock{% endif %}"
+  }
+}
+    </script>
+    <script>
+        window.productId = {{ product.id }};
+    </script>
+{% endblock %}
+{% block js %}
+    <script src={% static "js/product_detail.js" %}></script>
+    <script src={% static "js/favorite.js" %}></script>
+    <script src={% static "js/slider.js" %}></script>
+    <script src={% static "js/swiper-bundle.min.js" %}></script>
+{% endblock %}

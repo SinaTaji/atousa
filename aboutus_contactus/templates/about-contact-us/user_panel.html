@@ -1,0 +1,91 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/user_panel.css" %}>
+{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block title %}
+    پنل کاربری
+{% endblock %}
+{% block content %}
+    <div id="user-panel-container">
+        <div class="custom-sidebar">
+            <h2>پنل کاربری شما</h2>
+            <ul>
+                <li><a href="{% url 'user_address_page' %}"> <img
+                        src="/static/image/icons/add-loc.svg"
+                        alt="لباس بچه">ثبت آدرس </a></li>
+                {% if partner %}
+                    <li><a href="{% url 'partner_dashboard_page' %}"> <img
+                            src="/static/image/icons/hand-shake.svg"
+                            alt="لباس بچه">پنل همکار </a></li>
+                {% else %}
+                    <li><a href="{% url 'partner_register_page' %}"> <img
+                            src="/static/image/icons/hand-shake.svg"
+                            alt="لباس بچه">همکاری با آتوسا </a></li>
+                {% endif %}
+                <li><a href="{% url 'contact_page' %}"> <img
+                        src="/static/image/icons/letter.svg"
+                        alt="لباس بچه">ارسال پیام</a></li>
+                <li><a href="{% url 'user_logout' %}"> <img
+                        src="/static/image/icons/exit-svgrepo-com%20(1).svg"
+                        alt="لباس بچه">خروج </a></li>
+            </ul>
+        </div>
+        <div class="custom-main">
+            <div class="box-wrapper" style="--main-color: #538E4F">
+                <a href="{% url 'user_tickets_page' %}">
+                    <div class="custom-glass-box" id="contacts-b">
+                        <span class="gifts_count" {% if messages_count == 0 %}style="display: none;"{% endif %}>
+                {{ messages_count }}</span>
+                        <div class="box-title"><h2>پیام‌ها</h2></div>
+                        <div class="user-count">{{ message }}</div>
+                    </div>
+                </a>
+                <a href="{% url 'contact_page' %}">
+                    <div class="dashed-line tooltip-container"><span class="tooltip-text">ارسال پیام جدید</span></div>
+                </a>
+            </div>
+
+            <div class="box-wrapper" style="--main-color: #9C9C61">
+                <a href="{% url 'user_address_page' %}">
+                    <div class="custom-glass-box" id="address-b">
+                        <div class="box-title"><h2>آدرس ها</h2></div>
+                        <div class="user-count">{{ addresses }}</div>
+                    </div>
+                </a>
+                <a href="{% url 'user_address_page' %}">
+                    <div class="dashed-line tooltip-container"><span class="tooltip-text">ثبت آدرس جدید</span></div>
+                </a>
+            </div>
+
+            <div class="box-wrapper" style="--main-color: #99689C">
+                <a href="{% url 'user_orders_page' %}">
+                    <div class="custom-glass-box" id="orders-b">
+                        <div class="box-title"><h2>سفارشات</h2></div>
+                        <div class="user-count">{{ orders }}</div>
+                    </div>
+                </a>
+                <a href="{% url 'product_list_page' %}">
+                    <div class="dashed-line tooltip-container"><span class="tooltip-text">ثبت سفارش جدید</span></div>
+                </a>
+            </div>
+
+            <div class="box-wrapper" style="--main-color: #9C655B">
+                <a href="{% url 'wish_list_page' %}">
+                    <div class="custom-glass-box" id="wish-b">
+                        <div class="box-title"><h2>علاقه مندی ها</h2></div>
+                        <div class="user-count">{{ wishes }}</div>
+                    </div>
+                </a>
+                <a href="{% url 'product_list_page' %}">
+                    <div class="dashed-line tooltip-container"><span class="tooltip-text">افزودن به علاقه مندی</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}<script src={% static "js/user_panel_orders.js" %}></script>{% endblock %}

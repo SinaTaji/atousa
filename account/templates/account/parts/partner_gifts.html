@@ -1,0 +1,79 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href={% static "css/gifts.css" %}>{% endblock %}
+{% block meta %}
+	<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load  jformat %}
+{% block title %}
+    صندوق هدایا
+{% endblock %}
+{% block content %}
+    <div id="gifts_container">
+        <div class="gift-section active-gifts">
+            <h2 id="activ-title">کدهای فعال شما</h2>
+            {% if active_gifts %}
+                <div class="gift-list">
+                    {% for gift in active_gifts %}
+                        <div class="gift-card valid">
+                            <div class="gift-header">
+                                <h3>{{ gift.title }}</h3>
+                                {% if gift.percent %}
+                                    <span class="percent">{{ gift.percent }}٪ تخفیف</span>
+                                {% endif %}
+                            </div>
+                            <p class="description">{{ gift.description|linebreaksbr }}</p>
+                            <div class="gift-info">
+                                {% if gift.gift_code %}
+                                    <p><strong> کد : </strong> <code>{{ gift.gift_code }}</code></p>
+                                {% endif %}
+                                <h4>
+                                    {% if gift.valid_until %}
+                                        <strong> اعتبار تا : </strong>
+                                        {{ gift.valid_until|jformat:"%Y/%m/%d" }}
+                                    {% endif %}
+                                </h4>
+                                <h4>
+                                    {% if gift.max_uses %}<strong> این کد تخفیف فقط {{ gift.usage }} دفعه قابل استفاده است</strong> {% endif %}
+                                </h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-gift">
+                    <img src="/static/image/empty-gifts.png" alt="کد فعال وجود ندارد">
+                </div>
+            {% endif %}
+        </div>
+
+
+        <div class="gift-section expired-gifts">
+            <h3 id="exp-title">کدهای منقضی</h3>
+            {% if expired_gifts %}
+                {% for gift in expired_gifts %}
+                    <div class="gift-card expired">
+                        <div class="gift-header">
+                            <h4>{{ gift.title }}</h4>
+                            <span class="percent gray">{{ gift.percent }}٪</span>
+                        </div>
+                        <p class="description">{{ gift.description|truncatewords:20 }}</p>
+                        <div class="gift-info">
+                            <p><strong>کد:</strong> <code>{{ gift.gift_code }}</code></p>
+                            {% if gift.used_count %}
+                            	<p><strong>استفاده شده:</strong> {{ gift.used_count }}</p>
+                            {% endif %}
+                            <p><strong>تاریخ انقضا:</strong>
+                                {% if gift.valid_until %}
+                                    {{ gift.valid_until|date:"Y/m/d" }}
+                                 {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>کد منقضی‌شده‌ای وجود ندارد.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

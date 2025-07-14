@@ -1,0 +1,55 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/form_base.css" %}>{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block title %}عضویت همکار{% endblock %}
+{% block content %}
+    <section class="book" id="form_auth">
+
+        <div id="form-ui">
+            <img id=cover_img src="/static/image/welcom.jpg"
+                 alt="">
+            <form action="{% url 'partner_register_page' %}" method="post" id="form" enctype="multipart/form-data"
+                  novalidate>
+                {% csrf_token %}
+                <div id="welcome-lines">
+                    <div id="welcome-line-1">فرم ثبت نام همکار</div>
+                </div>
+                <div id="form-body">
+                    <div class="image-upload-container">
+                        <input type="file" name="image" id="id_image" accept="image/*"
+                               onchange="previewImage(event)">
+                        <label for="id_image" class="image-upload-label">
+                            <img id="imagePreview" src="/static/image/icons/user-prof.svg" alt="پیش‌ نمایش تصویر">
+                        </label>
+                        {% for error in form.image.errors %}
+                            <div class="error-msg">{{ error }}</div>
+                        {% endfor %}
+                        <h4>تصویر پروفایل شما</h4>
+                    </div>
+                    <div id="input-area">
+                        {% for field in form %}
+                            {% if field.name != "image" %}
+                                <div id="label-input"><label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                </div>
+                                <div class="form-inp">
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <div class="error-msg">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div id="submit-button-cvrr">
+                        <button id="submit-button" type="submit">ارسال</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+{% block js %}<script src={% static "js/partner_register.js" %}></script>{% endblock %}

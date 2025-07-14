@@ -1,0 +1,102 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/article.css" %}>{% endblock %}
+{% block title %}
+    مجله فروشگاه لباس آتوسا | لیست مقالات
+{% endblock %}
+
+{% block meta %}
+    <meta name="description"
+          content="لیست کامل مقالات مرتبط با لباس بچه، راهنمای انتخاب، مد و نکات خرید در فروشگاه آتوسا. دسته‌بندی‌های مقالات به همراه مقالات محبوب.">
+    <meta name="keywords"
+          content="مقالات لباس بچه, راهنمای خرید لباس بچه, مقالات مد کودک, مقالات فروشگاه آتوسا, دسته‌بندی مقالات">
+{% endblock %}
+
+{% block og_title %}مقالات فروشگاه لباس بچه آتوسا{% endblock %}
+{% block og_description %}دسته‌بندی‌ها و مقالات محبوب در حوزه لباس بچه و نکات مد و خرید در فروشگاه آتوسا.{% endblock %}
+{% block og_image %}/static/image/articles-cover.jpg{% endblock %}
+
+{% block twitter_title %}مقالات لباس بچه | آتوسا{% endblock %}
+{% block twitter_description %}لیست کامل مقالات و نکات انتخاب لباس بچه در فروشگاه آتوسا.{% endblock %}
+{% block twitter_image %}/static/image/articles-cover.jpg{% endblock %}
+
+{% block content %}
+    <div class="article-container">
+        <div class="mobile-top-bar mobile" id="mobile-filter-bar">
+            <button onclick="openDrawer('filters')">
+                <img src="/static/image/icons/filter.svg" alt="">دسته بندی
+            </button>
+            <button onclick="openDrawer('sort')">
+                <img src="/static/image/icons/order-by.svg" alt="">محبوب ترین
+            </button>
+        </div>
+        <!-- پرده تارکننده -->
+        <div class="overlay mobile" id="overlay" onclick="closeDrawer()"></div>
+        <div class="drawer drawer-full mobile" id="drawer-filters">
+            <form id="filter-form-mobile" method="get" action="">
+                <div class="drawer-header">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <button id="backBtn" aria-label="بازگشت" type="button">
+                            <img src="/static/image/icons/back.svg" alt="بازگشت">
+                        </button>
+                        <p id="drawerTitle">دسته بندی ها</p>
+                    </div>
+                    <button class="close-btn" onclick="closeDrawer()" aria-label="بستن" type="button">X</button>
+                </div>
+
+                <div class="drawer-body mobile">
+                    <h2>دسته‌بندی مقالات</h2>
+                    <a href="{% url 'article_list_page' %}" class="category-link" data-slug="">همه مقالات</a>
+                    {% for cat in categories %}
+                        <a href="#" class="category-link" data-slug="{{ cat.slug }}">
+                            {{ cat.title }} ({{ cat.article_count }})
+                        </a>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+
+        <!-- پنل مرتب‌سازی -->
+        <div class="drawer drawer-half mobile" id="drawer-sort">
+            <div class="drawer-header">
+                <p>محبوب ترین ها </p>
+                <button class="close-btn" onclick="closeDrawer()">X</button>
+            </div>
+            <div class="drawer-body">
+                <h2>مقالات محبوب</h2>
+                {% for art in popular_article %}
+                    <a href="{{ art.get_absolute_url }}">{{ art.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="side-wrapper">
+            <aside class="sidebar desktop">
+                <h2>دسته‌بندی مقالات</h2>
+                <ul>
+                    <li><a href="#" class="category-link" data-slug="">همه مقالات</a></li>
+                    {% for cat in categories %}
+                        <li>
+                            <a href="#" class="category-link" data-slug="{{ cat.slug }}">
+                                {{ cat.title }} ({{ cat.article_count }})
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+            <aside class="article-sidebar desktop">
+                <h2>مقالات محبوب</h2>
+                {% for art in popular_article %}
+                    <a href="{{ art.get_absolute_url }}">{{ art.title }}</a>
+                {% endfor %}
+            </aside>
+        </div>
+
+        <main class="article-grid" id="articleContainer">
+            {% include 'article/article_cards.html' with articles=articles %}
+        </main>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src={% static "js/article.js" %}></script>
+{% endblock %}

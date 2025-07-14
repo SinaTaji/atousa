@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+{% endblock %}
+
+{% block title %} پنل مدیریت آتوسا {% endblock %}
+
+{% block branding %}
+    <div class="admin_head">
+    
+        <div id="admin-header"><h2>{{ unseen_notifications_count }}</h2>
+            <h1 id="site-name">
+            <img src="/static/image/logo.png" alt="">
+            <a href="{% url 'admin:index' %}"> پنل مدیریت آتوسا</a>
+        </h1></div>
+        <div id="head-nav">
+            <a href="/atousa/admin/panel/sina1234/site_settings/" class="section" title="مدلها در برنامه تنظیمات سایت ">تنظیمات
+                سایت</a>
+            <a href="/atousa/admin/panel/sina1234/account/" class="section" title="مدلها در برنامه حساب کاربری ">حساب
+                کاربری</a>
+            <a href="/atousa/admin/panel/sina1234/aboutus_contactus/" class="section"
+               title="مدلها در برنامه درباره ما و تماس با ما "> تماس با ما</a>
+            <a href="/atousa/admin/panel/sina1234/orders/" class="section" title="مدلها در برنامه سفارشات ">سفارشات</a>
+            <a href="/atousa/admin/panel/sina1234/home/" class="section" title="مدلها در برنامه صفحه اصلی ">صفحه
+                اصلی</a>
+            <a href="/atousa/admin/panel/sina1234/products/" class="section"
+               title="مدلها در برنامه محصولات ">محصولات</a>
+            <a href="/atousa/admin/panel/sina1234/article/" class="section" title="مدلها در برنامه مقالات ">مقالات</a>
+        </div>
+        <div>
+            <a href="/"><img id="admin_logo" src="/static/image/icons/atousa.png" alt=""></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/form_base.css" %}>{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block title %}
+    کد تایید
+{% endblock %}
+{% block content %}
+    <section class="book" id="form_auth">
+        <form method="POST" action="{% url 'verify_otp_page' %}">
+            {% csrf_token %}
+            <div class="otp-box">
+                <img id="logo_form" src="/static/image/icons/forms.png" alt="">
+                <h2>کد تایید را وارد کنید</h2>
+                <div class="otp-inputs">
+                    <input type="tel" maxlength="1" class="otp" autofocus inputmode="numeric" pattern="[0-9]*" />
+                    <input type="tel" maxlength="1" class="otp"/>
+                    <input type="tel" maxlength="1" class="otp"/>
+                    <input type="tel" maxlength="1" class="otp"/>
+                </div>
+                <input type="hidden" name="user_otp" id="otp_full"/>
+                <br>
+                <div class="form-btn">
+                    <button id="otp_btn" type="submit">تایید</button>
+                    <div id="timer-box">
+                        <span id="countdown">2:00</span>
+                        <a href="{% url 'resend_otp' %}" id="resend-link" style="display: none;">ارسال مجدد کد</a>
+                    </div>
+                </div>
+                {% if error %}
+                    <div class="error-msg">{{ error }}</div>
+                {% endif %}
+            </div>
+        </form>
+    </section>
+{% endblock %}
+{% block js %}<script src={% static "js/otp.js" %}></script>{% endblock %}

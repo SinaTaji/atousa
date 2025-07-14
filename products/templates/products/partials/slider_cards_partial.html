@@ -1,0 +1,57 @@
+{% load price_filters %}
+<div class="swiper product-swiper mini-product-slider">
+    <div class="swiper-wrapper">
+        {% for product in products %}
+
+            <div class="swiper-slide">
+                <a href="{{ product.get_absolute_url }}">
+                    <div class="product-card">
+                        <div class="image-wrapper">
+                            {% if product.discount_is_active %}
+                                <span class="discount-timer"
+                                      data-expiry="{{ product.discount_expiry|date:'Y-m-d H:i:s' }}"></span>
+                            {% endif %}
+                            {% if product.image %}
+                                <img class="product-image" loading="lazy" src="{{ product.image.url }}"
+                                     alt="{{ product.title }}">
+                                <img class="watermark" src=" /static/image/logo-card.jpg" alt="لباس بچه">
+                            {% else %}
+                                <img class="product-image" loading="lazy" src="/static/image/boys.png" alt="لباس بچه">
+                                <img class="watermark" src=" /static/image/logo-card.jpg" alt="لباس بچه">
+                            {% endif %}
+                        </div>
+                        <h3 class="product-title">{{ product.title }}</h3>
+                        <div id="desc_product">
+                            <h3> مدل : {{ product.model }}</h3>
+                        </div>
+                        <div id="desc_product">
+                            <h3> از {{ product.age }}</h3>
+                        </div>
+
+                        <div id="card_bottom">
+                            {% if product.has_discount %}
+                                <div id="discounting">
+                                    <p id="after_discount">{{ product.get_discounted_price|format_price }}</p>
+                                    <p id="befor_discount">{{ product.price|format_price }}</p>
+                                </div>
+                                <h3 id="discount">{{ product.discount }}%</h3>
+                            {% else %}
+
+                                <div id="discounting">
+                                    <h5 id="product-code">کد : {{ product.code }}</h5>
+                                    <p id="without_discount">{{ product.price|format_price }}</p>
+                                </div>
+                                <div style="width: 50px;"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- فلش‌ها -->
+    <div class="swiper-button-prev custom-swiper-btn"></div>
+    <div class="swiper-button-next custom-swiper-btn"></div>
+</div>
+

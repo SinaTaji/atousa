@@ -1,0 +1,58 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href={% static "css/form_base.css" %}>{% endblock %}
+{% block title %}
+    ارسال تیکت پشتیبانی | ارتباط با فروشگاه لباس آتوسا
+{% endblock %}
+
+{% block meta %}
+    <meta name="description"
+          content="اگر سوال یا مشکلی دارید، از طریق فرم ارسال تیکت با پشتیبانی فروشگاه لباس آتوسا در تماس باشید. پاسخ‌گویی سریع و دقیق توسط تیم پشتیبانی ما.">
+    <meta name="keywords"
+          content="ارسال تیکت, پشتیبانی فروشگاه لباس, تماس با آتوسا, پشتیبانی مشتریان, فرم تماس با ما, مشکل در سفارش">
+{% endblock %}
+
+{% block og_title %}ارتباط با پشتیبانی فروشگاه آتوسا{% endblock %}
+{% block og_description %}برای هرگونه سوال، درخواست یا مشکل، می‌توانید از فرم تیکت استفاده کرده و پاسخ سریع تیم پشتیبانی
+    ما را دریافت کنید.{% endblock %}
+{% block og_image %}/static/image/contact.jpg{% endblock %}
+
+{% block twitter_title %}ارسال تیکت پشتیبانی | آتوسا{% endblock %}
+{% block twitter_description %}از طریق فرم تیکت فروشگاه آتوسا، با پشتیبانی در ارتباط باشید. پاسخ سریع و حرفه‌ای در
+    کمترین زمان.{% endblock %}
+{% block twitter_image %}/static/image/contact.jpg{% endblock %}
+
+{% block content %}
+    <section class="book" id="form_auth">
+        <div id="form-ui">
+            <img id=cover_img src="/static/image/contact.jpg" alt="ارسال تیکت پشتیبانی فروشگاه آتوسا">
+            <form action="{% url 'contact_page' %}" method="post" id="form-contact">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next|default:'/' }}">
+                <img id="logo_form" src="/static/image/icons/forms.png" alt="لوگوی فروشگاه لباس آتوسا">
+                <div id="form-body">
+                    <div id="welcome-lines">
+                        <div id="welcome-line-1">ارسال تیکت به پشتیبانی</div>
+                        <p>درخواست خود را به صورت یک تیکت مطرح کنید تا کارشناسان ما در اسرع وقت، به آن پاسخ دهند</p>
+                    </div>
+                    <div id="input-area">
+                        {% for field in form %}
+                            <div class="form-c">
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="error-msg">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id="submit-button-cvr">
+                        <button id="send-btn" type="submit">ارسال</button>
+                    </div>
+                    {% if error %}
+                        <div class="error-msg">{{ error }}</div>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

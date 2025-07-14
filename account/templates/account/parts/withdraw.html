@@ -1,0 +1,103 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href={% static "css/withdraw.css" %}>{% endblock %}
+{% block meta %}
+	<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load price_filters %}
+{% load jformat %}
+{% block title %}
+    برداشت
+{% endblock %}
+{% block content %}
+    <div class="withdraw-section">
+        <div class="partner-card">
+            <div class="partner-image-wrapper">
+                <img src="{{ partner.image.url }}" alt="تصویر پروفایل" class="partner-image">
+            </div>
+            <div class="partner-info-grid">
+                <div class="partner-info-item">
+                    <span class="partner-label">نام</span>
+                    <span class="partner-value">{{ partner.first_name }}</span>
+                </div>
+
+                <div class="partner-info-item">
+                    <span class="partner-label">نام خانوادگی</span>
+                    <span class="partner-value">{{ partner.last_name }}</span>
+                </div>
+
+                <div class="partner-info-item">
+                    <span class="partner-label">تاریخ عضویت</span>
+                    <span class="partner-value">{{ partner.created_at|jformat:"%Y/%m/%d" }}</span>
+                </div>
+
+                <div class="partner-info-item">
+                    <span class="partner-label">سطح کاربر</span>
+                    <span class="partner-value">
+                <span class="partner-rank {{ partner.rank }}">{{ partner.get_rank_display }}</span>
+            </span>
+                </div>
+
+                <div class="partner-info-item">
+                    <span class="partner-label">پورسانت قابل برداشت</span>
+                    <span class="partner-value">{{ partner.commission_can_clime|format_price }} </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="withdraw-container">
+
+            <div class="withdraw-card withdraw-list">
+                <h3>در حال بررسی</h3>
+                {% if progressing %}
+                    {% for item in progressing %}
+                        <div class="withdraw-item">
+                            مبلغ: {{ item.amount|format_price }} <br>
+                            تاریخ: {{ item.created_at|jformat:"%Y/%m/%d" }}<br>
+                            <span class="withdraw-status-pending">در انتظار پرداخت</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>درخواستی ثبت نشده است.</p>
+                {% endif %}
+            </div>
+
+            <div class="withdraw-card withdraw-form-card">
+                <h2>درخواست برداشت</h2>
+                <form method="post" action="{% url 'partner_withdraw_page' %}" novalidate>
+                    {% csrf_token %}
+                    <div class="withdraw-form-group">
+                        {{ form.card.label_tag }}
+                        {{ form.card }}
+                        {{ form.card.errors }}
+                    </div>
+                    <div class="withdraw-form-group">
+                        {{ form.amount.label_tag }}
+                        {{ form.amount }}
+                        {{ form.amount.errors }}
+                    </div>
+                    <button type="submit" class="withdraw-submit-btn">ثبت درخواست</button>
+                </form>
+            </div>
+
+            <div class="withdraw-card withdraw-list">
+                <h3>پرداخت‌شده</h3>
+                {% if paid %}
+                    {% for item in paid %}
+                        <div class="withdraw-item" style="border-left-color: #28a745;">
+                            مبلغ: {{ item.amount|format_price }} <br>
+                            تاریخ: {{ item.created_at|jformat:"%Y/%m/%d" }}<br>
+                            {% if item.p_id %}
+                                کد پیگیری: {{ item.p_id }}<br>
+                            {% endif %}
+                            <span class="withdraw-status-paid">پرداخت‌شده</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>هنوز پرداختی ثبت نشده.</p>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

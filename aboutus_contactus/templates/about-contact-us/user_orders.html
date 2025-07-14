@@ -1,0 +1,56 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/user_panel.css" %}>
+    <link rel="stylesheet" href={% static "css/custom_cart.css" %}>
+    <link rel="stylesheet" href={% static "css/cart_detail.css" %}>
+{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block title %}
+    پیگیری سفارشات
+{% endblock %}
+{% block content %}
+    <div id="user-panel-container">
+        <div class="custom-main" id="user-order-page">
+            <div class="box-wrapper" style="--main-color: #99689C">
+                <div class="custom-glass-box custom-glass-boxes" id="orders-b">
+                    <div class="box-title"><h2>سبد خرید فعلی </h2></div>
+                    <div class="user-count">{% if cart_item_count != 0 %}
+                        1 {% else %} 0
+                    {% endif %} </div>
+                </div>
+            </div>
+            <div class="box-wrapper" style="--main-color: #9C655B">
+                <div class="custom-glass-box custom-glass-boxes" id="wish-b">
+                    <div class="box-title"><h2> آماده سازی</h2></div>
+                    <div class="user-count">{{ orders_packing }}</div>
+                </div>
+            </div>
+            <div class="box-wrapper" style="--main-color: #9C9C61">
+                <div class="custom-glass-box custom-glass-boxes" id="address-b">
+                    <div class="box-title"><h2>در حال ارسال</h2></div>
+                    <div class="user-count">{{ orders_sending }}</div>
+                </div>
+            </div>
+
+            <div class="box-wrapper" style="--main-color: #538E4F">
+                <div class="custom-glass-box custom-glass-boxes" id="contacts-b">
+                    <div class="box-title"><h2>تحویل گرفته</h2></div>
+                    <div class="user-count">{{ orders_finished }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="orders-list" id="current-o">
+            {% if cart %}
+                <div class="sub-cart">
+                    <div class="cart-items-o">{% include 'cart/cart_items_partial.html' with item=cart %}</div>
+                    <a class="sub-cart-img" href="{% url 'orders:cart_detail_page' %}"><img
+                            src="/static/image/icons/complete-o.png" alt="">سبد خرید فعلی شما</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block js %}<script src={% static "js/user_panel_orders.js" %}></script>{% endblock %}

@@ -1,0 +1,54 @@
+{% load price_filters %}
+<div class="cart-items" id="cart-items">
+    <div class="cart-summaryy">
+        <div class="cart-title">سبد خرید شما</div>
+    </div>
+    {% for item in cart %}
+        <div class="cart-item">
+            {% if item.variant_image_url %}
+                <img class="item-image" src="{{ item.variant_image_url }}" alt="{{ item.product_title }}">
+            {% else %}
+                <img class="product-image" src="/static/image/boys.png" alt="لباس بچه">
+            {% endif %}
+
+            <div class="item-details">
+                <div class="item-name"><a href="{{ item.product_url }}">{{ item.product_title }}
+                    {{ item.product_model }}</a>
+                    <div id="cart-id" class="desktop">
+                        کد محصول : {{ item.product_code }}
+                    </div>
+                </div>
+                <div id="cart-id" class="mobile">
+                    کد محصول : {{ item.product_code }}
+                </div>
+                <div class="item-meta"
+                     data-variant-key="{{ item.variant_id }}"
+                     data-unit-discount="{{ item.item_discount }}"
+                     data-unit-price="{{ item.get_discounted_price }}">
+
+                    <div id="c-s">رنگ: {{ item.color_name }} | سایز: {{ item.size_name }}</div>
+                    <div id="quantity">
+                        <button class="decrease-btn">-</button>
+                        <span class="quantity">{{ item.quantity }}</span>
+                        <button class="increase-btn">+</button>
+                    </div>
+                    {% if item.variant_stock %}
+                        <div id="pricing">
+                            {% if item.has_discount %}
+                                <div class="item-discount"> {{ item.total_discount|format_price }}تخفیف</div>
+                            {% else %}
+                            {% endif %}
+
+                            <div class="item-price">{{ item.total_price|format_price }} </div>
+                        </div>
+                    {% else %}
+                        <h2 id="no-stock">عدم موجودی</h2>
+                    {% endif %}
+                </div>
+
+
+            </div>
+            <button class="remove-btn" data-variant-key="{{ item.variant_id }}">حذف</button>
+        </div>
+    {% endfor %}
+</div>

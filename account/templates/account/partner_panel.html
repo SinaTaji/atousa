@@ -1,0 +1,110 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/partner_panel.css" %}>{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load jformat %}
+{% load custom_filters %}
+{% load price_filters %}
+{% block title %}
+    پنل فروشنده
+{% endblock %}
+{% block content %}
+    <div class="partner-dashboard">
+        <div class="custom-sidebar">
+            <h2>پنل فروش شما</h2>
+            <ul>
+                <li><a href="{% url 'partner_gifts_page' %}"> <img
+                        src="/static/image/icons/gift-box.svg"
+                        alt="لباس بچه"> صندوق هدایا <span id="gifts_count"
+                                                          {% if gifts_count == 0 %}style="display: none;"{% endif %}>{{ gifts_count }}
+                    </span></a>
+                </li>
+                <li><a href="{% url 'contact_page' %}"> <img
+                        src="/static/image/icons/letter.svg"
+                        alt="لباس بچه">ارسال پیام</a></li>
+                <li><a href="{% url 'user_logout' %}"> <img
+                        src="/static/image/icons/learn.svg"
+                        alt="لباس بچه"> آموزش </a></li>
+                <li><a href="{% url 'partner_withdraw_page' %}"> <img
+                        src="/static/image/icons/withdraw.svg"
+                        alt="لباس بچه"> برداشت </a></li>
+            </ul>
+        </div>
+        <div class="container-panel">
+            <div class="partner-panel">
+                <div class="notifs" id="{{ partner.rank }}">
+                    {% if partner.rank == 'bronze' %}
+                        <img src="/static/image/bronze.png" alt="">
+                    {% elif partner.rank == 'silver' %}
+                        <img src="/static/image/silver.png" alt="">
+                    {% elif partner.rank == 'gold' %}
+                        <img src="/static/image/gold.png" alt="">
+                    {% endif %}
+                </div>
+
+                <div class="profile-card" id="{{ partner.rank }}">
+                    <img src="{{ partner.image.url }}" alt="تصویر پروفایل">
+                    <div class="profile-info">
+                        <h2>{{ partner.first_name }} {{ partner.last_name }}</h2>
+                        <p>تاریخ عضویت : <strong>{{ partner.created_at|jformat:"%Y/%m/%d" }}</strong></p>
+                        {% if partner.rank == 'gold' %}
+                            <p>برای طلایی موندن</p>
+                        {% else %}
+                            <p>تا سطح بعد</p>
+                        {% endif %}
+                        <div class="progress-bar">
+                            <div class="progress-fill"
+                                 data-width="{{ current_stat|get_promotion_progress:partner.rank }}">
+                                {% if current_stat.how_much_to_promote == True %}
+                                    <h3>✔</h3>
+                                {% else %}
+                                    {{ current_stat.how_much_to_promote|format_price }}  باقی مانده
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="progress-bar blue">
+                            <div class="progress-fill" data-width="{{ days_left|percent_of:30 }}">
+                                {{ days_left }} روز
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box cc">
+                    <h3>تعداد فروش این ماه </h3>
+                    {% if current_stat.sales_count %}
+                        <div class="value">{{ current_stat.sales_count }}</div>
+                    {% else %}
+                        <div class="value">0</div>
+                    {% endif %}
+                </div>
+                <div class="stat-box cc">
+                    <h3>پورسانت قابل برداشت</h3>
+                    <div class="value">{{ partner.commission_can_clime|format_price }} </div>
+                </div>
+                <div class="stat-box">
+                    <h3>تعداد فروش کل </h3>
+                    <div class="value">{{ partner.sells }}</div>
+                </div>
+                <div class="stat-box">
+                    <h3>پورسانت کل</h3>
+                    <div class="value">{{ partner.commission_earned|format_price }} </div>
+                </div>
+            </div>
+            <div id="charth3"><h3>نمودار فروش شما</h3></div>
+            <canvas id="monthlyChart" height="auto"></canvas>
+        </div>
+    </div>
+    <script id="chart-labels" type="application/json">{{ chart_labels_json|safe }}</script>
+    <script id="chart-sales" type="application/json">{{ sales_data_json|safe }}</script>
+    <script id="chart-commission" type="application/json">{{ commission_data_json|safe }}</script>
+{% endblock %}
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/partner.js' %}"></script>
+{% endblock %}

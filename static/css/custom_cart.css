@@ -1,0 +1,599 @@
+#three-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+    direction: rtl;
+    max-width: 1000px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    border: 4px dashed #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle.active {
+    border: solid #4CAF50 4px;
+}
+
+.circle img {
+    width: 220px;
+    height: 220px;
+}
+
+.line {
+    flex: 1;
+    height: 2px;
+    border-top: 4px dashed #ccc;
+    margin: 0 10px;
+}
+
+.line-active {
+    flex: 1;
+    height: 2px;
+    border: solid #4CAF50 4px;
+    margin: 0 10px;
+}
+
+.label {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: #555;
+}
+
+.cart-summary {
+    background-color: white;
+    border: 1px solid rgba(255, 221, 0, 0.3);
+    box-shadow: 0 0 10px 2px rgba(84, 84, 84, 0.21);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    max-height: fit-content;
+    width: 30%;
+    text-align: center;
+    gap: 20px;
+}
+
+#end-summery {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#end-summery p {
+    font-size: 1.3rem;
+}
+
+#total-org {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+}
+
+#summery-login {
+    display: flex;
+    gap: 10px;
+}
+
+#free-shipping-msg {
+    font-size: 1.3rem;
+    border-radius: 10px;
+    background-color: rgba(224, 224, 224, 0.42);
+    color: #b69100;
+    border: 1px solid rgba(182, 145, 0, 0.32);
+    font-weight: 600;
+    padding: 5px;
+}
+
+#total-price {
+    color: #9d8500;
+    font-weight: 600;
+}
+
+.total-price {
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#total-discount-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 198, 0, 0.58);
+}
+
+.checkout-btn {
+    background-color: #f7c325;
+    color: #1e1e1e;
+    border: none;
+    width: 100%;
+    padding: 5px 5px;
+    font-size: 1.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.checkout-btn:hover {
+    background-color: #e0b300;
+}
+
+.cart-summaryy {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 20px;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+#total-discount {
+    color: #00917c;
+    font-size: 1.4rem;
+}
+
+.item-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-quantity-controller {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#log-need {
+    font-size: 1.5rem;
+}
+
+
+.item-discount {
+    background-color: rgba(211, 3, 3, 0.79);
+    padding: 5px;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.decrease-btn,
+.increase-btn {
+    width: 25px;
+    height: 28px;
+    background-color: #fdd835;
+    font-size: 20px;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quantity {
+    text-align: center;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+}
+
+#payment-container {
+    margin: 90px auto;
+    max-width: 1600px;
+    display: flex;
+    gap: 50px;
+}
+
+.invoice-container {
+    max-width: 1100px;
+    background: #1e1e1e;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
+    border: 1px solid #2b2b2b;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed #d4af37;
+    margin-bottom: 40px;
+}
+
+.invoice-header img {
+    max-height: 80px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: inset 2px #f8cf00;
+    object-fit: contain;
+    filter: brightness(0.95);
+}
+
+.invoice-header h1 {
+    color: #d4af37;
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.invoice-info {
+    color: white;
+    margin-bottom: 40px;
+    font-size: 15px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #3a3a3a;
+}
+
+.invoice-info div {
+    width: 30%;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-bottom: 40px;
+}
+
+.invoice-table th, .invoice-table td {
+    background: #1f1f1f;
+    padding: 14px 12px;
+    text-align: center;
+    border: none;
+    font-size: 19px;
+    color: #e0e0e0;
+}
+
+.invoice-table th {
+    background-color: #2c2c2c;
+    color: #d4af37;
+    font-weight: 600;
+    border-bottom: 2px solid #3c3c3c;
+}
+
+.invoice-table tr {
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.03);
+    border-radius: 8px;
+}
+
+.invoice-summary {
+    background: #2a2a2a;
+    border-top: 2px dashed #d4af37;
+    padding: 10px;
+    font-size: 16px;
+    color: #ddd;
+}
+
+.invoice-summary div {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.final-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d4af37;
+    border-top: 2px solid #d4af37;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+#faktor-id {
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    gap: 5px;
+}
+
+.golden {
+    color: gold;
+}
+
+.invoice-table td:first-child {
+    border-left: 1px solid #d4af37;
+}
+
+.invoice-table tbody tr:nth-child(even) td {
+    background-color: #2a2a2a;
+}
+
+
+#send-post {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    max-height: fit-content;
+    background: linear-gradient(to left, black, #494949);
+    color: white;
+}
+
+#send-not {
+    font-size: 1.2rem;
+}
+
+#final-step {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 500px;
+}
+
+#pay-all img {
+    max-width: 70px;
+}
+
+#pay-all {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#zarin-pal {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+
+#zarin-pal img {
+    max-width: 90px;
+}
+
+#payment-way {
+    padding: 20px;
+    color: white;
+    border-radius: 20px;
+    background: linear-gradient(to left, black, #494949);
+}
+
+#pay {
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    font-weight: 600;
+    background-color: rgb(255, 192, 0);
+    display: flex;
+    gap: 20px;
+    border-radius: 20px;
+    color: #000000;
+}
+
+#pay:hover {
+    transition: .5s ease;
+    background-color: rgb(255, 230, 63);
+}
+
+#pay img {
+    max-width: 70px;
+}
+
+
+#cart-len {
+    display: flex;
+    gap: 15px;
+}
+
+.cart-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000000;
+    border-right: 5px solid #f7c325;
+    padding-right: 10px;
+}
+
+#total-items {
+    text-align: center;
+    background-color: gold;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+#container-f {
+    background-image: url("/static/image/svgs/f-pay-bg.svg");
+}
+
+/*==========================================================*/
+@media (max-width: 768px) {
+    #three-step {
+        max-width: 100%;
+        margin: 10px auto;
+    }
+
+    .circle {
+        width: 90px;
+        height: 90px;
+        border: 2px dashed #ccc;
+    }
+
+    #cart-icon {
+        width: 55px;
+    }
+
+    .label {
+        font-size: 14px;
+    }
+
+    .line {
+        flex: .3;
+        height: 1px;
+        border-top: 2px dashed #ccc;
+        margin: 0;
+
+    }
+
+    .line-active {
+        flex: .3;
+        border: solid #4CAF50 2px;
+        margin: 0;
+    }
+
+    .circle.active {
+        border: solid #4CAF50 3px;
+    }
+
+    .cart-title {
+        font-size: 22px;
+    }
+
+    .item-meta {
+        align-items: unset;
+    }
+
+    .decrease-btn, .increase-btn {
+        width: 20px;
+        height: 20px;
+        font-size: unset;
+    }
+
+    .item-discount {
+        padding: 3px;
+        font-size: 9px;
+    }
+
+    .cart-summaryy {
+        margin-right: 10px;
+    }
+
+    .cart-summary {
+        width: 100%;
+    }
+
+    #total-org {
+        font-size: 20px;
+    }
+
+    #total-discount-wrapper {
+        font-size: 19px;
+    }
+
+    .total-price {
+        font-size: 19px;
+    }
+
+    #free-shipping-msg {
+        font-size: 18px;
+    }
+
+    #payment-container {
+        max-width: 100%;
+        display: block;
+        margin-top: 40px;
+    }
+
+    .invoice-container {
+        max-width: 100%;
+        padding: 15px;
+        border-radius: 0;
+    }
+
+    .invoice-header img {
+        width: 100px;
+        border: 1px solid goldenrod;
+        margin-bottom: 9px;
+    }
+
+    .invoice-header h1 {
+        font-size: 26px;
+    }
+
+    #faktor-id {
+        font-size: 12px;
+    }
+
+    .invoice-header {
+        margin-bottom: 15px;
+    }
+
+    .invoice-info {
+        padding: 10px;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .invoice-table th {
+        font-weight: normal;
+        font-size: 10px;
+    }
+
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .invoice-table th,
+    .invoice-table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    @media (max-width: 768px) {
+        .invoice-table,
+        .invoice-table thead,
+        .invoice-table tbody,
+        .invoice-table th,
+        .invoice-table td,
+        .invoice-table tr {
+            display: block;
+            width: 100%;
+        }
+
+        .invoice-table thead tr {
+            display: none;
+        }
+
+        .invoice-table tbody tr {
+            margin-bottom: 15px;
+            padding: 5px;
+        }
+
+        .invoice-table tbody td {
+            /* هر سلول به شکل بلوک عمودی */
+            border: .5px solid rgba(218, 165, 32, 0.47);
+            position: relative;
+            text-align: left;
+            white-space: normal;
+        }
+
+        /* اضافه کردن label برای هر مقدار در جدول با استفاده از data-attribute */
+        .invoice-table tbody td::before {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 45%;
+            padding-left: 10px;
+            white-space: nowrap;
+            font-weight: normal;
+            color: #FFD03A;
+            transform: translateY(-50%);
+            text-align: right;
+            content: attr(data-label);
+        }
+    }
+    #payment-way{
+        border-radius: unset;
+    }
+}

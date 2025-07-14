@@ -1,0 +1,63 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href={% static "css/messages.css" %}>{% endblock %}
+{% load jformat %}
+
+{% block title %}
+    پیام‌های من | گفت‌وگو با پشتیبانی آتوسا
+{% endblock %}
+
+{% block meta %}
+    <meta name="description"
+          content="در این صفحه می‌توانید پیام‌های ارسالی خود به پشتیبانی فروشگاه لباس آتوسا و پاسخ‌های کارشناسان را مشاهده کنید.">
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block og_title %}پیام‌های شما{% endblock %}
+{% block og_description %}نمایش پیام‌های شما و پاسخ‌های پشتیبانی فروشگاه آتوسا.{% endblock %}
+{% block og_image %}/static/image/contact.jpg{% endblock %}
+
+{% block twitter_title %}گفت‌وگو با پشتیبانی | فروشگاه آتوسا{% endblock %}
+{% block twitter_description %}پیام‌ها و پاسخ‌های شما با پشتیبانی فروشگاه آتوسا در این صفحه نمایش داده
+    می‌شود.{% endblock %}
+{% block twitter_image %}/static/image/contact.jpg{% endblock %}
+
+{% block content %}
+    <div class="chat-container">
+        {% for item in contacts %}
+            {% if item.type == 'contact' %}
+                <div class="message-wrapper {% if item.object.answered %}answered{% else %}unanswered{% endif %}">
+                    <div class="message user-message">
+                        <div class="user-m">
+                            <h2 class="owner-m">پیام شما</h2>
+                            <h3>موضوع : {{ item.object.get_ticket_display }}</h3>
+                        </div>
+                        <div class="messages-c">
+                            <p>{{ item.object.text }}</p>
+                            <p class="date-m">{{ item.object.created_at|jformat:"%Y/%m/%d" }}</p>
+                        </div>
+                        {% if item.object.answered %}
+                            <span class="status-icon">✔️</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% elif item.type == 'reply' %}
+                <div class="message reply-message">
+                    <h2 class="owner-m" id="admin-m">پاسخ ادمین</h2>
+                    <div class="messages-c">
+                        <p>{{ item.object.text }}</p>
+                        <p class="date-m">{{ item.object.created_at|jformat:"%Y/%m/%d" }}</p>
+                    </div>
+                </div>
+            {% elif item.type == 'standalone' %}
+                <div class="message reply-message">
+                    <h2 class="owner-m" id="admin-m">پیام سیستم</h2>
+                    <div class="messages-c">
+                        <p>{{ item.object.text }}</p>
+                        <p class="date-m">{{ item.object.created_at|jformat:"%Y/%m/%d" }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

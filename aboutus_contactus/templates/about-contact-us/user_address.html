@@ -1,0 +1,72 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href={% static "css/informations.css" %}>{% endblock %}
+{% block meta %}
+	<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block title %}
+    آدرس های ثبت شده
+{% endblock %}
+{% block content %}
+    <div id="address-container">
+    <div class="address-list-container">
+        {% if addresses %}
+            <h3 class="section-title">آدرس‌های ذخیره ‌شده</h3>
+            <div class="address-cards">
+                {% for addr in addresses %}
+                    <div class="address-card" onclick="fillFormWithAddress(this)"
+                         data-first_name="{{ addr.first_name }}"
+                         data-last_name="{{ addr.last_name }}"
+                         data-province="{{ addr.province }}"
+                         data-city="{{ addr.city }}"
+                         data-address="{{ addr.address }}"
+                         data-postal_code="{{ addr.postal_code }}"
+                         data-phone="{{ addr.phone }}">
+                        <div class="address-title">{{ addr.first_name }} {{ addr.last_name }}</div>
+                        <div class="address-meta">{{ addr.province }}، {{ addr.city }}</div>
+                        <div class="address-meta">{{ addr.address }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-wrapper" id="form-ad">
+        <h2>ثبت آدرس</h2>
+        <form id="address-form" method="post" action="{% url 'user_address_page' %}" novalidate>
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="custom-dropdown" id="dropdown-province">
+                    <div class="dropdown-selected">انتخاب استان</div>
+                    <ul class="dropdown-options"></ul>
+                    <input type="hidden" name="province" id="input-province" value="{{ form.province.value }}">
+                    <div class="error-msg" id="error-province" style="display: none;"></div>
+                </div>
+
+                <div class="custom-dropdown disabled" id="dropdown-city">
+                    <div class="dropdown-selected">انتخاب شهر</div>
+                    <ul class="dropdown-options"></ul>
+                    <input type="hidden" name="city" id="input-city" value="{{ form.city.value }}">
+                    <div class="error-msg" id="error-city" style="display: none;"></div>
+                </div>
+
+                {% for field in address_form %}
+                    {% if field.name != "province" and field.name != "city" %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="error-msg">{{ field.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">ثبت آدرس </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    </div>
+{% endblock %}
+{% block js %}<script src={% static "js/informations.js" %}></script>{% endblock %}

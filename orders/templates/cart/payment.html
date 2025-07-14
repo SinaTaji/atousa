@@ -1,0 +1,115 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/custom_cart.css" %}>{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load price_filters %}
+{% block title %}
+    پرداخت
+{% endblock %}
+{% block content %}
+    <div id="three-step">
+        <div class="step">
+            <a href="{% url 'orders:cart_detail_page' %}">
+                <div class="circle active">
+                    <img id="cart-icon" src="/static/image/icons/cart-page.svg" alt="">
+                </div>
+            </a>
+
+            <span class="label">سبد خرید</span>
+        </div>
+
+        <div class="line-active"></div>
+
+        <div class="step">
+            <a href="{% url 'orders:cart_information_page' %}">
+                <div class="circle active">
+                    <img id="cart-icon" src="/static/image/icons/location.svg" alt="لباس بچه">
+                </div>
+            </a>
+            <span class="label">اطلاعات ارسال</span>
+        </div>
+
+        <div class="line-active"></div>
+
+        <div class="step">
+            <div class="circle active">
+                <img id="cart-icon" src="/static/image/icons/card-pay.svg" alt="">
+            </div>
+            <span class="label">پرداخت</span>
+        </div>
+    </div>
+
+    <div id="payment-container">
+        <div class="invoice-container">
+            <div class="invoice-header">
+                <div id="faktor-id">
+                    <p>شماره فاکتور:</p> {{ order.code }}
+                </div>
+                <h1>فاکتور خرید</h1>
+
+                <img src="/static/image/logo.png" alt="بنر فروشگاه">
+
+            </div>
+
+            <div class="invoice-info">
+                {{ order.address }}
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>محصول</th>
+                    <th>رنگ</th>
+                    <th>سایز</th>
+                    <th>قیمت واحد</th>
+                    <th>تخفیف واحد</th>
+                    <th>تعداد</th>
+                    <th>قیمت کل</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in order.items.all %}
+                    <tr>
+                        <td data-label="#"><p class="golden">{{ forloop.counter }}</p></td>
+                        <td data-label="محصول :">{{ item.product.product.title }} {{ item.product.product.model }} </td>
+                        <td data-label="رنگ :">{{ item.product.color.title }} </td>
+                        <td data-label="سایز :">{{ item.product.size.title }} </td>
+                        <td data-label="قیمت واحد :">{{ item.product.price|format_price }}</td>
+                        <td data-label="تخفیف واحد :">{{ item.discount|format_price }}</td>
+                        <td data-label="تعداد :">{{ item.quantity }}</td>
+                        <td data-label="قیمت کل :">{{ item.price|format_price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="invoice-summary">
+                <div><strong>جمع کل:</strong> {{ order.get_total_items_price|format_price }} </div>
+                <div><strong>هزینه ارسال:</strong>
+                    {% if order.shipping_method == 'pishteaz' %}
+                        {{ order.get_shipping_price|format_price }}
+                    {% else %}
+                        <p>به عهده مشتری میباشد</p>
+                    {% endif %}
+                </div>
+                <div class="final-price"><strong>قیمت نهایی:</strong> {{ order.get_final_price|format_price }}
+                </div>
+            </div>
+        </div>
+        <div id="final-step">
+            <div id="payment-way">
+                <div id="pay-all"> پرداخت امن با کلیه کارت های عضو شتاب<img src="/static/image/icons/card-pay.svg"
+                                                                            alt=""></div>
+                <div id="zarin-pal"><img src="/static/image/icons/zarin-logo.png" alt=""> پرداخت امن و آسان با درگاه
+                    پرداخت زرین پال
+                </div>
+{#                <a id="pay" href="{% url 'orders:order_payment' order.id %}"> پرداخت <img src="/static/image/arrow.svg"#}
+{#                                                                                          alt=""> </a>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}

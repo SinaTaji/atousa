@@ -1,0 +1,137 @@
+{% load price_filters %}
+{% load jformat %}
+<div class="status-desc-box">
+    {% if status == 'cart' %}
+        <p>در این بخش می‌توانید سبد خرید فعلی خود را مشاهده و خرید خود را نهایی کنید.</p>
+    {% elif status == 'packing' %}
+        <p>در این بخش می‌توانید سبد خریدی که در حال آماده سازی برای ارسال است ببینید</p>
+    {% elif status == 'sending' %}
+        <p>در این بخش میتواند سفارشی که در حال ارسال است را ببینید و با کد رهگیری لحظه به لحظه از بسته خود با خبر
+            باشید</p>
+    {% elif status == 'finished' %}
+        <p>در این بخش می‌توانید تاریخچه خرید های موفق خود از آتوسا را ببینید</p>
+    {% endif %}
+</div>
+{% if status == 'cart' and cart %}
+    <div class="sub-cart">
+        <div class="cart-items-o">{% include 'cart/cart_items_partial.html' with item=cart %}</div>
+        <a class="sub-cart-img" href="{% url 'orders:cart_detail_page' %}">
+            <img src="/static/image/icons/complete-o.png" alt="">سبد خرید فعلی شما
+        </a>
+    </div>
+{% else %}
+    {% for order in orders %}
+        <div class="order-block">
+            <div class="invoice-container" id="user-invoice-container">
+                {% if status == 'sending' and order.TrackingCode %}
+                    <div class="tracking-box">
+                        <p><strong>کد رهگیری مرسوله شما :</strong> {{ order.TrackingCode }}</p>
+                        {% if order.shipping_method == 'pishteaz' %}
+                            <a class="track-link"
+                               href="https://tracking.post.ir/search.aspx?id={{ order.TrackingCode }}" target="_blank">
+                                پیگیری در سامانه پست ایران
+                            </a>
+                        {% elif order.shipping_method == 'tipax' %}
+                            <a class="track-link" href="https://www.tipax.ir" target="_blank">
+                                پیگیری در سامانه تیپاکس
+                            </a>
+                        {% else %}
+                            <p>لینک پیگیری موجود نیست.</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if status == 'packing' %}
+                    <p id="packing">در حال آماده‌سازی سفارش شما هستیم. به‌دلیل تعداد بالای درخواست‌ها، ممکن است این
+                        فرایند تا دو روز
+                        کاری زمان ببرد. از صبوری و همراهی‌تان سپاسگزاریم 💛</p>
+                {% endif %}
+                <div class="invoice-header">
+                    <div id="faktor-id">
+                        <p> شماره فاکتور : {{ order.code }} </p>
+                    </div>
+                    <h1>فاکتور خرید</h1>
+                    <img src="/static/image/logo.png" alt="بنر فروشگاه">
+                </div>
+                <div class="order-date">
+                    <p> تاریخ : {{ order.updated|jformat:"%Y/%m/%d" }}</p>
+                    <p> ساعت : {{ order.updated|jformat:"%H:%M:%S" }}</p>
+                </div>
+                <div class="invoice-info">
+                    {{ order.address }}
+                </div>
+
+                <table class="invoice-table" id="olds-faktor">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>تصویر</th>
+                        <th>محصول</th>
+                        <th>رنگ</th>
+                        <th>سایز</th>
+                        <th>قیمت واحد</th>
+                        <th>تخفیف واحد</th>
+                        <th>تعداد</th>
+                        <th>قیمت کل</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in order.items.all %}
+                        <tr>
+                        <tr>
+                            <td data-label="#"><p class="golden">{{ forloop.counter }}</p></td>
+                            <td data-label="تصویر :"><img id="fak-img" src="{{ item.product.product.image.url }}"
+                                                          alt=""></td>
+                            <td data-label="محصول :">{{ item.product.product.title }} {{ item.product.product.model }} </td>
+                            <td data-label="رنگ :">{{ item.product.color.title }} </td>
+                            <td data-label="سایز :">{{ item.product.size.title }} </td>
+                            <td data-label="قیمت واحد :">{{ item.product.price|format_price }}</td>
+                            <td data-label="تخفیف واحد :">{{ item.discount|format_price }}</td>
+                            <td data-label="تعداد :">{{ item.quantity }}</td>
+                            <td data-label="قیمت کل :">{{ item.price|format_price }}</td>
+                        </tr>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="invoice-summary">
+                    <div><strong>جمع کل:</strong> {{ order.get_total_items_price|format_price }} </div>
+                    <div><strong>هزینه ارسال:</strong>
+                        {% if order.shipping_method == 'pishteaz' %}
+                            {{ order.get_shipping_price|format_price }}
+                        {% else %}
+                            <p>به عهده مشتری میباشد</p>
+                        {% endif %}
+                    </div>
+                    <div class="final-price"><strong>قیمت نهایی:</strong> {{ order.get_final_price|format_price }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% empty %}
+        <a class="empty-cart" href="{% url 'product_list_page' %}"><img src="/static/image/icons/empty-cart.jpg"
+                                                                        alt="لباس بچه آتوسا"></a>
+    {% endfor %}
+    <div class="pagination-container">
+        {% if page_obj.has_previous %}
+            <button class="pagination-btn" data-page="{{ page_obj.previous_page_number }}" data-status="{{ status }}">
+                قبلی
+            </button>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <button class="pagination-btn active">{{ num }}</button>
+            {% else %}
+                <button class="pagination-btn" data-page="{{ num }}" data-status="{{ status }}">{{ num }}</button>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <button class="pagination-btn" data-page="{{ page_obj.next_page_number }}" data-status="{{ status }}">
+                بعدی
+            </button>
+        {% endif %}
+    </div>
+{% endif %}

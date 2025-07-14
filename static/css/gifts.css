@@ -1,0 +1,172 @@
+#gifts_container {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    background-image: url("/static/image/svgs/f-pay-bg.svg");
+}
+
+.gift-page-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    padding: 30px;
+}
+
+/* بخش کدهای فعال */
+.active-gifts {
+    max-width: 1100px;
+    max-height: fit-content;
+    background-color: #fdfdfd;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.26);
+    border: 2px inset rgba(0, 128, 0, 0.44);
+}
+
+/* بخش کدهای منقضی */
+.expired-gifts {
+    width: 450px;
+    max-height: 1000px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(200, 0, 0, 0.28);
+    border: 2px inset rgba(128, 0, 0, 0.44);
+}
+
+/* عنوان هر بخش */
+.gift-section h2,
+.gift-section h3 {
+    font-size: 2rem;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+/* لیست کدها */
+.gift-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* کارت اصلی */
+.gift-card {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1.5px solid #ddd;
+    transition: box-shadow 0.3s;
+}
+
+.gift-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* کارت فعال */
+.gift-card.valid {
+    border-left: 5px solid #4CAF50;
+}
+
+/* کارت منقضی */
+.gift-card.expired {
+    border-left: 5px solid #d32f2f;
+    opacity: 0.75;
+}
+
+/* هدر کارت */
+.gift-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.gift-header h3,
+.gift-header h4 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
+}
+
+.percent {
+    background-color: #4CAF50;
+    color: white;
+    padding: 4px 10px;
+    font-size: 1.3rem;
+    border-radius: 20px;
+}
+
+.percent.gray {
+    background-color: #999;
+}
+
+/* توضیحات */
+.description {
+    font-size: 1.3rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+/* اطلاعات پایین کارت */
+.gift-info {
+    font-size: 1.3rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.gift-info p {
+    margin-bottom: 20px;
+}
+
+.gift-info h4 {
+    color: #0f7a25;
+}
+
+.gift-info code {
+    background-color: #eee;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* حالت خالی */
+.empty-gift {
+    text-align: center;
+}
+
+.empty-gift img {
+    max-width: 1050px;
+}
+
+.empty-gift p {
+    margin-top: 15px;
+    font-size: 15px;
+    color: #888;
+}
+
+#activ-title {
+    color: darkgreen;
+}
+
+#exp-title {
+    color: darkred;
+}
+
+@media (max-width: 768px) {
+    .active-gifts{
+        max-width: 100%;
+    }
+    #gifts_container{
+        display: block;
+    }
+    .empty-gift img{
+        width: 100%;
+    }
+    .expired-gifts{
+        width: 100%;
+        max-height: 500px;
+    }
+}

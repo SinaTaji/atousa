@@ -1,0 +1,189 @@
+{% load cache %}
+<header class="main-header">
+    <div id="header">
+        <div id="logo-bar">
+            <a href="{% url 'home' %}"><img src="/static/image/logo.png" alt="لوگو" class="logo-img desktop"/></a>
+            <a href="{% url 'home' %}"><img src="/static/image/icons/forms.png" alt="لوگو" class="logo-img mobile"
+                                            id="logo-img-mobile"/></a>
+            <div class="header-left">
+                <div id="cart-pro-mobile">
+                    <a class="cart-head" href="{% url 'user_panel_page' %}"> <img src="/static/image/icons/user-m.svg"
+                                                                                  alt="لباس بچه"><span
+                            class="cart-count" id="messages_count"
+                            {% if messages_count == 0 %}style="display: none;"{% endif %}>{{ messages_count }}</span></a>
+                    <a class="cart-head" href="{% url 'orders:cart_detail_page' %}"><img
+                            src="/static/image/icons/cart.svg"
+                            alt="لباس بچه">
+                         <span class="cart-count" id="cart-count" {% if cart_item_count == 0 %}style="display: none;"{% endif %}>
+                {{ cart_item_count }}
+            </span>
+                    </a>
+                </div>
+
+                <button id="open-search" class="search-icon">
+                    <img src="/static/image/icons/search-.svg" alt="جستجو">
+                </button>
+
+                <!-- لایه جستجو -->
+                <div id="search-overlay" class="search-overlay">
+                    <div class="search-header">
+                        <span>جستجو</span>
+                        <button id="close-search" class="close-btn">✖</button>
+                    </div>
+                    <div class="search-content">
+                        <form id="search-form-mobile" method="get" action="{% url 'product_list_page' %}"
+                              autocomplete="off">
+                            <div class="search-input-wrapper">
+                                <img id="search-submit-icon" src="/static/image/icons/search-.svg" alt="جستجو"
+                                     class="icon search-icon">
+                                <input type="text" id="search-input-mobile" name="q"
+                                       placeholder="جستجو دسته بندی و کالا" autocomplete="off">
+                                <span id="clear-search-input" class="icon clear-icon">✖</span>
+                            </div>
+                        </form>
+                        <div class="search-suggestions" id="search-suggestions"></div>
+                    </div>
+                </div>
+                <!-- منوی موبایل -->
+                <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+
+                <!-- منوی موبایل -->
+                <nav class="mobile-menu" id="mobileMenu">
+                    <div id="login-btn">
+                        <a href="{% url 'user_login_page' %}">ثبت نام / ورود</a>
+                    </div>
+                    <ul class="menu-list">
+                        <div>
+                            <form id="search-form-mobile" method="get" action="{% url 'product_list_page' %}"
+                                  autocomplete="off">
+                                <div class="search-input-wrapper">
+                                    <img id="search-submit-burger" src="/static/image/icons/search-.svg"
+                                         alt="جستجو" class="icon search-icon">
+                                    <input type="text" id="search-input-burger" name="q"
+                                           placeholder="جستجو دسته بندی و کالا"
+                                           autocomplete="off">
+                                    <span id="clear-search-burger" class="icon clear-icon">✖</span>
+                                </div>
+                            </form>
+                            <div class="search-suggestions" id="search-suggestions-burger"></div>
+                        </div>
+                        {% cache 60000 "home_static" %}
+                            <div class="head_access">
+                                <a href="{% url 'product_list_page' %}?gender=girls">
+                                    <div class="category-box box-1">
+                                        <div class="text">
+                                            <h2>دخترانه</h2>
+                                            <p>GIRLS</p>
+                                        </div>
+                                        <img src="/static/image/girls.png" alt="لباس دخترانه" class="image">
+                                    </div>
+                                </a>
+
+                                <a href="{% url 'product_list_page' %}?gender=boys">
+                                    <div class="category-box box-2">
+                                        <div class="text">
+                                            <h2>پسرانه</h2>
+                                            <p>BOYS</p>
+                                        </div>
+                                        <img src="/static/image/boys.png" alt="لباس پسرانه" class="image">
+                                    </div>
+                                </a>
+
+                                <a href="{% url 'product_list_page' %}?size=1">
+                                    <div class="category-box box-3">
+                                        <div class="text">
+                                            <h2>نوزاد</h2>
+                                            <p>BABY</p>
+                                        </div>
+                                        <img src="/static/image/babyes.png" alt="لباس نوزاد" class="image">
+                                    </div>
+                                </a>
+                            </div>
+                        {% endcache %}
+                        {% include "home/includes/header_categories.html" %}
+                    </ul>
+                </nav>
+                <div class="overlay" id="menuOverlay" onclick="closeMobileMenu()"></div>
+                {#موبایل===============================#}
+                <div>
+                    <form id="search-form" method="get" action="{% url 'product_list_page' %}"
+                          autocomplete="off">
+                        <input type="text" id="search-input" name="q"
+                               placeholder="جستجو دسته بندی و کالا"
+                               autocomplete="off">
+                        <img src="/static/image/icons/search-svgrepo-com.svg" alt="">
+                    </form>
+                    <div class="search-suggestions" id="search-suggestions-desktop"></div>
+                </div>
+            </div>
+        </div>
+        <div id="cart-pro">
+            <a class="tooltip-container" class="cart-head" href="{% url 'orders:cart_detail_page' %}"><img
+                    src="/static/image/icons/cart.svg"
+                    alt="لباس بچه">
+                <span class="cart-count" id="cart-count" {% if cart_item_count == 0 %}style="display: none;"{% endif %}>
+                {{ cart_item_count }}
+            </span>
+                <span class="tooltip-text">سبد خرید</span>
+            </a>
+            <a class="tooltip-container" class="cart-head" href="{% url 'wish_list_page' %}"> <img
+                    src="/static/image/heart.svg"
+                    alt="لباس بچه">
+                <span class="cart-count" id="wishlist_count"
+                      {% if wishlist_count == 0 %}style="display: none;"{% endif %}>
+                {{ wishlist_count }}
+            </span>
+                <span class="tooltip-text">علاقه مندی ها</span></a>
+            <a class="tooltip-container" class="cart-head" href="{% url 'user_panel_page' %}"> <img
+                    src="/static/image/icons/user.svg"
+                    alt="لباس بچه"><span class="cart-count" id="messages_count"
+                                         {% if messages_count == 0 %}style="display: none;"{% endif %}>
+                {{ messages_count }}
+            </span><span class="tooltip-text">پنل کاربری</span></a>
+        </div>
+    </div>
+    <div class="bot-header">
+
+        <div class="header-center">
+            {% include "home/includes/header_categories.html" %}
+        </div>
+
+        <div class="header-right">
+            <nav class="navbar">
+                <a href="{% url 'home' %}"> خانه <img src="/static/image/icons/home-svgrepo-com%20(1).svg"
+                                                      alt="لباس بچه"></a>
+                <a href="{% url 'aboutus_page' %}"> درباره ما <img src="/static/image/icons/about-us.svg"
+                                                                   alt="لباس بچه"></a>
+                <a href="{% url 'contact_us_page' %}"> تماس با ما <img src="/static/image/icons/contact.svg"
+                                                                       alt="لباس بچه"></a>
+                <a href="{% url 'article_list_page' %}"> مجله آتوسا <img src="/static/image/icons/article.svg"
+                                                                         alt="لباس بچه"></a>
+                {% if part %}
+                    <a href="{% url 'partner_dashboard_page' %}"> پنل همکار <img
+                            src="/static/image/icons/hand-shake.svg"
+                            alt="لباس بچه"> </a>
+                {% else %}
+                    <a href="{% url 'partner_register_page' %}"> همکاری با آتوسا <img
+                            src="/static/image/icons/hand-shake.svg"
+                            alt="لباس بچه"> </a>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                        <a href="/atousa/admin/panel/sina1234/"> پنل مدیریت <img
+                                src="/static/image/icons/admin-with-cogwheels-svgrepo-com.svg" alt="لباس بچه"></a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'user_login_page' %}">ثبت نام / ورود</a>
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+    <div class="bottom-header">
+        <img src="/static/image/h.svg" alt="بنر" class="header-bg-img"/>
+    </div>
+</header>
+

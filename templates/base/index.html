@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    {% include 'includes/header_reference.html' %}
+    {% block css %}{% endblock %}
+    {% block meta %}
+        <meta name="description"
+              content="خرید لباس بچه و زنانه با بهترین قیمت از فروشگاه آتوسا. ارسال سریع، کیفیت عالی و تنوع بالا.">
+        <meta name="keywords"
+              content="لباس بچه, لباس زنانه, خرید لباس بچه, فروشگاه لباس زنانه, ست مادر و فرزند, لباس کودک, لباس دخترانه">
+    {% endblock %}
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:title" content="{% block og_title %}فروشگاه لباس آتوسا{% endblock %}">
+    <meta property="og:description"
+          content="{% block og_description %}فروش انواع لباس کودک، زنانه و ست مادر فرزندی با ارسال سریع و ضمانت کیفیت{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}فروشگاه لباس آتوسا{% endblock %}">
+    <meta name="twitter:description"
+          content="{% block twitter_description %}خرید لباس بچه و زنانه از فروشگاه آتوسا با کیفیت عالی و قیمت مناسب{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}/static/image/logo.png{% endblock %}">
+
+    <title> {% block title %}{% endblock %} </title>
+</head>
+<body>
+<div id="custom-message-container" style="display: none;">
+    <div id="custom-message" class="message-success">
+        <div class="message-bar"></div>
+        <div class="message-content">
+            <div id="message-img"><img src="/static/image/-%20Copy.png" alt="لباس بچه"></div>
+            <span id="message-text"></span>
+
+        </div>
+        <div id="message-buttons"></div>
+    </div>
+</div>
+{% include 'includes/header.html' %}
+<div id="global-loader" class="loader-overlay hidden">
+    <div class="spinner"></div>
+</div>
+{% block content %}{% endblock %}
+{% include 'includes/footer.html' %}
+{% include 'includes/footer_references.html' %}
+{% block js %}{% endblock %}
+
+<div class="support-btn" onclick="toggleSupportMenu()">
+    <img src="/static/image/icons/contact-fix.svg" alt="پشتیبانی">
+</div>
+
+<div class="support-menu" id="supportMenu">
+    <a href="tg://resolve?domain=atousa_1403"
+       onclick="setTimeout(() => { window.location.href = 'https://t.me/atousa_1403'; }, 500);"
+       target="_blank"> پشتیبانی تلگرام<img
+            src="/static/image/icons/telegram.svg" alt=""> </a>
+    <a href="whatsapp://send?phone=989212385127"
+       onclick="setTimeout(() => { window.location.href = 'https://wa.me/989123456789'; }, 500);"
+       target="_blank"> پشتیبانی واتساپ<img
+            src="/static/image/icons/whatsapp.svg" alt=""> </a>
+    <a href={% url 'contact_page' %}> ارسال تیکت به پشتیبانی <img
+            src="/static/image/icons/letter.svg" alt=""> </a>
+</div>
+<script>
+    window.messagesQueue = [];
+    {% if messages %}
+        {% for msg in messages %}
+            window.messagesQueue.push({
+                type: "{{ msg.tags }}",
+                text: "{{ msg|escapejs }}"
+            });
+        {% endfor %}
+    {% endif %}
+</script>
+
+</body>
+</html>

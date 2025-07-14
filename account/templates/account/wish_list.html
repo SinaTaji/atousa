@@ -1,0 +1,17 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/favorite.css' %}">
+{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block title %}
+    لیست علاقه مندی ها
+{% endblock %}
+{% block content %}
+    <div class="wish-list-container">
+        {% include 'products/partials/_product_list.html' with products=products in_wishlist_page=True %}
+    </div>
+{% endblock %}
+{% block js %}<script src={% static "js/favorite.js" %}></script>{% endblock %}

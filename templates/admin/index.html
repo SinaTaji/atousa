@@ -1,0 +1,155 @@
+{% extends "admin/index.html" %}
+{% load static %}
+{% block content %}
+    <div style="display: grid; grid-template-rows: auto auto; gap: 50px;">
+        <div style="width: 70%;">
+            
+            <h4>آمار ۳۰ روز اخیر</h4>
+            
+            <canvas id="dailyChart" style="aspect-ratio: 2 / 1; width: 70%;"></canvas>
+        </div>
+        <!-- چارت‌های پایین: ماهانه و سالانه -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div>
+                <h4>آمار ماه‌های امسال</h4>
+                <canvas id="monthlyChart" style="aspect-ratio: 2 / 1; width: 100%;"></canvas>
+            </div>
+            <div>
+                <h4>آمار سال‌های گذشته</h4>
+                <canvas id="yearlyChart" style="aspect-ratio: 2 / 1; width: 100%;"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function fetchAndRender(url, canvasId, labelSales, labelOrders, labelSignups) {
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    const ctx = document.getElementById(canvasId).getContext('2d');
+
+                    const maxOrders = data.orders && data.orders.length ? Math.max(...data.orders) : 0;
+                    const maxSignups = data.signups && data.signups.length ? Math.max(...data.signups) : 0;
+
+                    const y1Max = Math.max(maxOrders, maxSignups, 10) + 5;
+
+                    new Chart(ctx, {
+                        data: {
+                            labels: data.labels,
+                            datasets: [
+                                {
+                                    type: 'line',
+                                    label: 'مقدار فروش توسط همکار',
+                                    data: data.p_sales,
+                                    borderColor: 'rgba(17,71,189,0.47)',
+                                    backgroundColor: 'rgba(0,0,0,0.4)',
+                                    fill: true,
+                                    tension: 0.4,
+                                    yAxisID: 'y',
+                                },
+                                {
+                                    type: 'line',
+                                    label: 'مقدار پورسانت همکار',
+                                    data: data.p_commission,
+                                    borderColor: 'rgba(0,0,0,0.47)',
+                                    backgroundColor: 'rgb(162,23,201)',
+                                    fill: true,
+                                    tension: 0.4,
+                                    yAxisID: 'y',
+                                },
+                                {
+                                    type: 'line',
+                                    label: "تعداد فروش همکاران",
+                                    data: data.p_orders,
+                                    borderColor: 'rgb(167,0,255)',
+                                    backgroundColor: 'transparent',
+                                    fill: false,
+                                    tension: 0.4,
+                                    yAxisID: 'y1',
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                },
+                                {
+                                    type: 'line',
+                                    label: labelSales,
+                                    data: data.sales,
+                                    borderColor: 'rgb(255,198,0)',
+                                    backgroundColor: 'rgba(255,184,0,0.4)',
+                                    fill: true,
+                                    tension: 0.4,
+                                    yAxisID: 'y',
+                                },
+                                {
+                                    type: 'line',
+                                    label: labelOrders,
+                                    data: data.orders,
+                                    borderColor: 'rgb(0,60,255)',
+                                    backgroundColor: 'transparent',
+                                    fill: false,
+                                    tension: 0.4,
+                                    yAxisID: 'y1',
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                },
+                                {
+                                    type: 'line',
+                                    label: 'ثبت نام کاربران',
+                                    data: data.signups || [],
+                                    borderColor: 'rgb(0, 200, 0)', // سبز
+                                    backgroundColor: 'transparent',
+                                    fill: false,
+                                    tension: 0.4,
+                                    yAxisID: 'y1',
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                },
+                                {
+                                    type: 'line',
+                                    label: 'ثبت نام همکاران',
+                                    data: data.p_signups || [],
+                                    borderColor: 'rgb(255,127,0)',
+                                    backgroundColor: 'transparent',
+                                    fill: false,
+                                    tension: 0.4,
+                                    yAxisID: 'y1',
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            interaction: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            stacked: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    position: 'left',
+                                },
+                                y1: {
+                                    beginAtZero: true,
+                                    position: 'right',
+                                    suggestedMax: y1Max,
+                                    grid: {
+                                        drawOnChartArea: false,
+                                    },
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        // فراخوانی چارت‌ها
+        fetchAndRender("{% url 'daily_sales_last_7_days' %}", 'dailyChart', 'مقدار فروش روزانه', 'تعداد فروش روزانه');
+        fetchAndRender("{% url 'monthly_sales_current_year' %}", 'monthlyChart', 'مقدار فروش ماهانه', 'تعداد فروش ماهانه');
+        fetchAndRender("{% url 'yearly_sales' %}", 'yearlyChart', 'مقدار فروش سالانه', 'تعداد فروش سالانه');
+    </script>
+
+    {{ block.super }}
+{% endblock %}

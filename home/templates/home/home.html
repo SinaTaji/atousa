@@ -1,0 +1,157 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/home.css" %}>
+    <link rel="stylesheet" href={% static "css/swiper-bundle.min.css" %}>
+    <link rel="stylesheet" href={% static "css/categories.css" %}>{% endblock %}
+{% load cache %}
+
+{% block title %}آتوسا | فروشگاه لباس بچگانه و زنانه{% endblock %}
+
+{% block meta %}
+    <meta name="description"
+          content="فروشگاه آنلاین لباس بچه و زنانه آتوسا. خرید آسان و مطمئن لباس‌های با کیفیت برای کودکان و مادران. جدیدترین و محبوب‌ترین مدل‌ها با تخفیف ویژه.">
+    <meta name="keywords"
+          content="لباس بچه، لباس زنانه، فروشگاه لباس، آتوسا، خرید آنلاین لباس، تخفیف لباس کودک، لباس مادر و فرزندی">
+    <meta name="robots" content="index, follow">
+{% endblock %}
+
+{% block og_title %}آتوسا | فروشگاه لباس بچه و زنانه{% endblock %}
+{% block og_description %}فروشگاه آنلاین لباس بچگانه و زنانه آتوسا با جدیدترین مدل‌ها و تخفیف‌های ویژه{% endblock %}
+{% block og_image %}/static/image/og-home.jpg{% endblock %}
+{% block og_type %}website{% endblock %}
+
+{% block twitter_title %}آتوسا | فروشگاه لباس بچگانه و زنانه{% endblock %}
+{% block twitter_description %}فروشگاه آنلاین لباس بچگانه و زنانه آتوسا با جدیدترین مدل‌ها و تخفیف‌های
+    ویژه{% endblock %}
+{% block twitter_image %}/static/image/og-home.jpg{% endblock %}
+
+{% block content %}
+    <!-- محتوای فعلی صفحه اصلی بدون تغییر -->
+    <div class="banner-wrapper">
+        <div class="swiper banner-swiper">
+            <div class="swiper-wrapper">
+                {% for banner in banners %}
+                    <div class="swiper-slide">
+                        {% if banner.url %}
+                            <a href="{{ banner.url }}">
+                                <img class="banner-img" src="{{ banner.image.url }}" alt="{{ banner.title }}">
+                            </a>
+                        {% else %}
+                            <img class="banner-img desktop" src="{{ banner.image.url }}" alt="{{ banner.title }}">
+                            <img class="banner-img mobile" src="{{ banner.mobile_image.url }}" alt="{{ banner.title }}">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+        <img class="slider-banner-svg" id="slider-banner-svg-mobile" src="/static/image/hb.svg" alt="زیبا">
+        <div class="head_access mobile-v">
+            <a href="{% url 'product_list_page' %}?gender=girls">
+                <div class="category-box box-1">
+                    <div class="text">
+                        <h2>دخترانه</h2>
+                        <p>GIRLS</p>
+                    </div>
+                    <img src="/static/image/girls.png" alt="لباس دخترانه" class="image">
+                </div>
+                <h2 class="mobile-v-t">دخترانه</h2>
+            </a>
+
+            <a href="{% url 'product_list_page' %}?gender=boys">
+                <div class="category-box box-2">
+                    <div class="text">
+                        <h2>پسرانه</h2>
+                        <p>BOYS</p>
+                    </div>
+                    <img src="/static/image/boys.png" alt="لباس پسرانه" class="image">
+                </div>
+                <h2 class="mobile-v-t">پسرانه</h2>
+            </a>
+
+            <a href="{% url 'product_list_page' %}?size=1">
+                <div class="category-box box-3">
+                    <div class="text">
+                        <h2>نوزاد</h2>
+                        <p>BABY</p>
+                    </div>
+                    <img src="/static/image/babyes.png" alt="لباس نوزاد" class="image">
+                </div>
+                <h2 class="mobile-v-t">نوزاد</h2>
+            </a>
+            <a class="category-box mobile" id="show-all" href="{% url 'categories_list_page' %}?ordering=-views">
+                <h5>مشاهده همه دسته بندی ها</h5> <img src="/static/image/arrow.svg" alt="arrow">
+                <h2 id="mobile-v-t">دسته بندی ها</h2>
+            </a>
+        </div>
+        <div>
+            {% include 'products/partials/_cat_partial.html' with categorya=categori %}
+        </div>
+        <div class="sliders-home">
+            <div class="slider-wrapper">
+                <div class="slider_d mobile-v-slider" id="recent_slider">
+                    <h2>جدیدترین ها</h2>
+                    <a href="{% url 'product_list_page' %}?ordering=-created_at"><h5>مشاهده همه</h5><img
+                            src="/static/image/arrow.svg"
+                            alt="arrow"></a>
+                </div>
+                <div class="sliders">
+                    {% include 'products/partials/slider_cards_partial.html' with products=most_recent %}
+                </div>
+            </div>
+            <div class="slider-wrapper">
+                <div class="slider_d mobile-v-slider" id="discount_slider">
+                    <h2>شگفت انگیز</h2>
+                    {% if global_discount_expiry %}
+                        <div id="discount-s">
+                            <div class="global-discount-timer"
+                                 data-expiry="{{ global_discount_expiry|date:'Y-m-d H:i:s' }}"></div>
+                        </div>
+                    {% endif %}
+                    <a href="{% url 'product_list_page' %}?ordering=-discount"><h5>مشاهده همه</h5><img
+                            src="/static/image/arrow.svg"
+                            alt="arrow"></a>
+                </div>
+                <div class="sliders">
+                    {% include 'products/partials/slider_cards_partial.html' with products=most_discount %}
+                </div>
+            </div>
+
+            <a id="magazine" href="{% url 'article_list_page' %}">
+                <img src="/static/image/icons/maginze.webp" alt="مجله آتوسا">
+            </a>
+            <div class="slider-wrapper">
+                <div class="slider_d mobile-v-slider" id="most_view_slider">
+                    <h2>محبوب ترین ها</h2>
+                    <a href="{% url 'product_list_page' %}?ordering=-views"><h5>مشاهده همه</h5><img
+                            src="/static/image/arrow.svg"
+                            alt="arrow"></a>
+                </div>
+                <div class="sliders">
+                    {% include 'products/partials/slider_cards_partial.html' with products=most_viewed %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "آتوسا",
+          "url": "https://example.com/",
+          "logo": "https://example.com/static/image/logo.png",
+          "sameAs": [
+            "https://instagram.com/yourbrand",
+            "https://t.me/yourbrand"
+          ]
+        }
+    </script>
+{% endblock %}
+{% block js %}
+    <script src={% static "js/home.js" %}></script>
+    <script src={% static "js/slider.js" %}></script>
+    <script src={% static "js/swiper-bundle.min.js" %}></script>
+{% endblock %}

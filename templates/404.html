@@ -1,0 +1,14 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block title %}صفحه مورد نظر پیدا نشد - 404{% endblock %}
+
+{% block content %}
+    <div class="container-ep">
+        <div class="page-404">
+            <img src="{% static 'image/icons/404.jpg' %}" alt="not-found">
+            <h1>صفحه پیدا نشد!</h1>
+            <p>متأسفانه صفحه‌ای که دنبال آن هستید وجود ندارد یا حذف شده است.</p>
+            <a href="{% url 'home' %}">بازگشت به صفحه اصلی</a>
+        </div>
+    </div>
+{% endblock %}

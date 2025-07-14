@@ -1,0 +1,125 @@
+#site-name a {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.6rem;
+    text-decoration: none;
+}
+
+#site-name {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+#site-name img, #admin_logo {
+    border-radius: 20px;
+    border: 3px solid #ffffff;
+}
+#content{
+    max-width: 1600px;
+}
+.dashboard #content {
+    width: 1400px;
+    margin: 100px auto;
+}
+#admin-header{
+    display: flex;
+    align-items: center;
+}
+#admin-header h2{
+    background-color: #c70505;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.module caption {
+    background-color: #ffb500;
+}
+
+.colMS h1 {
+    display: none;
+}
+
+#header {
+    background-color: #ffb500;
+    border-bottom: 3px solid #ffa600 !important;
+    display: block !important;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+}
+#head-nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    gap: 30px;
+}
+
+#user-tools {
+    display: none !important;
+}
+
+.admin_head {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#site-name a {
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 1.7rem;
+    text-decoration: none;
+    padding-left: 1rem;
+}
+
+td img {
+    width: 30px;
+}
+
+#changelist table tbody tr:nth-child(odd) td {
+    background-color: #fff7e7 !important; /* رنگ روشن‌تر */
+}
+
+#changelist table tbody tr:nth-child(even) td {
+    background-color: #ffffff !important; /* رنگ پیش‌فرض سفید */
+}
+
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 0.5rem !important;
+}
+
+table th, table td {
+    padding: 0.75rem 1rem !important;
+    border: none !important;
+    background-color: #ffffff !important;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+}
+
+input[type="submit"], button {
+    background-color: #ffb500 !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 5px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease;
+}
+
+.breadcrumbs {
+    background-color: #000000 !important;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #4a148c !important;
+}
+
+/* عنوان داشبورد */
+.dashboard-title {
+    color: #4a148c;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 2rem;
+}

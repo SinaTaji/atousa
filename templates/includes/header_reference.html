@@ -1,0 +1,11 @@
+{% load static %}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="{% static 'image/fav/favicon.ico' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'image/fav/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="192x192" href="{% static 'image/fav/android-chrome-192x192.png' %}">
+<link rel="icon" type="image/png" sizes="512x512" href="{% static 'image/fav/android-chrome-512x512.png' %}">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+<link rel="stylesheet" href={% static "css/base.css" %}>
+<meta property="og:image" content="{% block og_image %}{% static 'image/logo.png' %}{% endblock %}">

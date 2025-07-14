@@ -1,0 +1,23 @@
+{% load cache %}
+{% cache 6000 "footer_static"%}
+<div id="footer-wrapper">
+    <img id="footer-bg" src="/static/image/about-us-bg.svg" alt="لباس بچه">
+    <section class="footer">
+    <div class="box-container">
+        {% for link in links %}
+            <div class="box">
+                <h3>{{ link.title }}</h3>
+                {% for sub in link.sub_link.all %}
+                    <a href="{{ sub.link }}"> <i class="fas fa-arrow-right"></i> {{ sub.title }} </a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    <div id="footer-des">
+        <h1>لباس کودک آتوسا</h1>
+        <h4>ما می‌دانیم که انتخاب لباس برای کودکان فقط یک خرید ساده نیست، بلکه بخشی از عشق و توجه به بزرگ‌ترین دارایی زندگی‌تان است.</h4>
+    </div>
+    </div>
+</section>
+    <div id="copy-right"><p>کلیه حقوق این سایت متعلق به فروشگاه آتوسا است </p></div>
+</div>
+{% endcache %}

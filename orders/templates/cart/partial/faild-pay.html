@@ -1,0 +1,33 @@
+{% extends 'base/index.html' %}
+{% block meta %}
+	<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load price_filters %}
+{% load jformat %}
+{% block title %}
+    پرداخت ناموفق
+{% endblock %}
+{% block content %}
+    <div class="container-c" id="container-f">
+        <div class="c">
+            <div class="i"><img src="/static/image/-%20Copy.png" alt="">
+                <div id="success-t">
+                    <h1 class="h f">پرداخت شما ناموفق بود!</h1>
+                    <p class="p">متأسفانه پرداخت شما با موفقیت انجام نشد یا توسط شما لغو شد.</p>
+                </div>
+            </div>
+            <h3 id="faild-info">ممکن است یکی از موارد زیر باعث این خطا شده باشد</h3>
+            <div id="faild-pay-info-section">
+                <h3 class="pay-info f">مشکل در اتصال اینترنت</h3>
+                <h3 class="pay-info f">عدم موجودی</h3>
+                <h3 class="pay-info f">پرداخت را لغو کرده باشید</h3>
+                <h3 class="pay-info f">لطفاً در صورت اطمینان از صحت اطلاعات، مجدداً تلاش نمایید.</h3>
+            </div>
+
+            <div id="success-pay-btns">
+                <a href="{% url 'orders:order_payment' order.id %}" class="b fb">تلاش مجدد</a>
+                <a href="{% url 'orders:cart_detail_page' %}" class="b fb">بازگشت به سبد خرید</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

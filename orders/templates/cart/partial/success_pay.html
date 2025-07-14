@@ -1,0 +1,34 @@
+{% extends 'base/index.html' %}
+{% block meta %}
+	<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load price_filters %}
+{% load jformat %}
+{% block title %}
+    پرداخت موفق
+{% endblock %}
+{% block content %}
+    <div class="container-c">
+        <div class="c">
+            <div class="i"><img src="/static/image/-%20Copy.png" alt="">
+                <div id="success-t">
+                    <h1 class="h">پرداخت شما با موفقیت انجام شد!</h1>
+                    <p class="p">از خرید شما سپاسگزاریم</p>
+                </div>
+            </div>
+
+            <div id="pay-info-section">
+                <h3 class="pay-info">مبلغ پرداخت شده : <span>{{ order.total_price|format_price }}</span></h3>
+                <h3 class="pay-info">کد رهگیری : <span>{{ order.ref_id }}</span></h3>
+                <h3 class="pay-info">تاریخ : <span>{{ order.updated|jformat:"%Y/%m/%d" }}</span></h3>
+                <h3 class="pay-info">ساعت : <span>{{ order.updated|jformat:"%H:%M:%S" }}</span></h3>
+                <h3 class="pay-info" id="last-i">روش ارسال : <span>{{ order.get_shipping_method_display}}</span></h3>
+            </div>
+
+            <div id="success-pay-btns">
+                <a href="/" class="b">بازگشت به صفحه اصلی</a>
+                <a href="{% url 'user_orders_page' %}" class="b">پیگیری سفارش</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href={% static "css/cart_detail.css" %}>
+    <link rel="stylesheet" href={% static "css/custom_cart.css" %}>{% endblock %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% load price_filters %}
+{% block title %}سبد خرید{% endblock %}
+{% block content %}
+    <div class="cart-detail-container">
+        <div id="three-step">
+            <div class="step">
+                <div class="circle active">
+                    <img id="cart-icon" src="/static/image/icons/cart-page.svg" alt="">
+                </div>
+                <span class="label">سبد خرید</span>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="step">
+                <div class="circle">
+                    <img id="cart-icon" src="/static/image/icons/location.svg" alt="">
+                </div>
+                <span class="label">اطلاعات ارسال</span>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="step">
+                <div class="circle">
+                    <img id="cart-icon" src="/static/image/icons/card-pay.svg" alt="">
+                </div>
+                <span class="label">پرداخت</span>
+            </div>
+        </div>
+        {% if request.GET.message == 'item_out_of_stock' %}
+            <div class="alerting">
+                <p>یک یا چند محصول ناموجود در سبد خرید شما وجود دارد. لطفاً ابتدا این محصولات را حذف کنید و سپس دوباره
+                    اقدام
+                    کنید.</p>
+            </div>
+        {% endif %}
+        <div class="cart-container" style="{% if not cart %}display: none;{% endif %}">
+
+            {% include 'cart/cart_items_partial.html' %}
+            <div class="cart-summary">
+                <div class="cart-summaryy">
+                    <div id="cart-len">
+                        <h4>تعداد کالا های شما</h4>
+                        <h3 id="total-items">{{ cart|length }}</h3>
+                    </div>
+                </div>
+                <div id="total-org">
+                    <p>قیمت کل</p>
+                    <span id="total-org-price">{{ cart.get_total_org_price|format_price }} </span>
+                </div>
+
+                {% if cart.get_total_discount %}
+                    <div id="total-discount-wrapper">
+                        <p>سود شما از این خرید</p>
+                        <div id="total-discount">{{ cart.get_total_discount|format_price }}</div>
+                    </div>
+                {% endif %}
+                <div>{% include 'cart/partial/gift_code_partial.html' %}</div>
+                <div class="total-price">
+                    <div> مجموع سبد خرید</div>
+                    <span id="total-price">{{ cart.get_total_price|format_price }} </span>
+                </div>
+
+
+                {% if request.user.is_authenticated %}
+                    <form action="{% url 'orders:cart_information' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="checkout-btn">ادامه خرید</button>
+                    </form>
+                {% else %}
+                    <div id="end-summery">
+                        <p>برای ادامه فرایند خرید</p>
+                        <div id="summery-login">
+                            <a class="checkout-btn" href="{% url 'user_login_page' %}?next={{ request.path }}">ورود /
+                                ثبت نام</a>
+                        </div>
+                    </div>
+                {% endif %}
+                <div id="free-shipping-msg">
+                    {% if cart.send_free == 0 %}
+                        ارسال شما رایگان است!
+                    {% else %}
+                        {{ cart.send_free|format_price }} تا ارسال رایگان
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        <div id="empty-detail" style="{% if cart %}display: none;{% endif %}">
+            <a class="empty-cart" href="{% url 'product_list_page' %}"><img src="/static/image/icons/empty-cart.jpg"
+                                                                            alt="لباس بچه آتوسا"></a>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src={% static "js/cart.js" %}></script>
+{% endblock %}

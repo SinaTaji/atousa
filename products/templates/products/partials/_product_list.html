@@ -1,0 +1,68 @@
+{% load price_filters %}
+{% for product in products %}
+    <div id="card-wish-list-{{ product.id }}" class="card-wish-container">
+        {% if in_wishlist_page %}
+            <button class="favorite-btnn remove-favorite-btn"
+                    data-product-id="{{ product.id }}"
+                    aria-label="حذف از علاقه‌مندی‌ها">
+                <span>حذف از علاقه ‌مندی ‌ها</span>
+            </button>
+        {% endif %}
+        <a href="{{ product.get_absolute_url }}">
+            <div class="product-card">
+                <div class="image-wrapper">
+                    {% if product.image %}
+                        <img class="product-image" loading="lazy" src="{{ product.image.url }}"
+                             alt="{{ product.title }}">
+                        <img class="watermark" loading="lazy" src=" /static/image/logo-card.jpg" alt="لباس بچه">
+                    {% else %}
+                        <img class="product-image" src="/static/image/boys.png" alt="لباس بچه">
+                        <img class="watermark" src=" /static/image/logo-card.jpg" alt="لباس بچه">
+                    {% endif %}
+                </div>
+                <div class="card-details">
+                    <h3 class="product-title">{{ product.title }}</h3>
+                    <div id="desc_product">
+                        <h3> مدل : {{ product.model }}</h3>
+                    </div>
+                    <div id="desc_product">
+                        <h3> از {{ product.age }}</h3>
+                    </div>
+
+
+                </div>
+                {% if product.is_active %}
+                    <div id="card_bottom">
+                        {% if product.has_discount %}
+                            <div id="discounting">
+                                <p id="after_discount">{{ product.get_discounted_price|format_price }}</p>
+                                <p id="befor_discount">{{ product.price|format_price }}</p>
+                            </div>
+                            <h3 id="discount">{{ product.discount }}%</h3>
+                        {% else %}
+                            <div id="discounting">
+                                <h5 id="product-code">کد : {{ product.code }}</h5>
+                                <p id="without_discount">{{ product.price|format_price }}</p>
+                            </div>
+                            <div style="width: 50px;"></div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <h2 class="not-active">عدم موجودی</h2>
+                {% endif %}
+            </div>
+
+        </a>
+    </div>
+
+
+{% empty %}
+    <div class="no-product">
+        <img src="/static/image/no_product.png" alt="محصولی وجود ندارد">
+        <p>خیلی گشتم ولی محصولی مطابق فیلتر هات پیدا نکردم !</p>
+    </div>
+{% endfor %}
+<nav class="pagination-container" aria-label="Pagination">
+    <ul class="pagination">
+    </ul>
+</nav>

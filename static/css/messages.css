@@ -1,0 +1,86 @@
+.chat-container {
+    max-width: 1600px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Vazirmatn', sans-serif;
+    direction: rtl;
+}
+
+.message-wrapper {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.user-message,
+.reply-message {
+    padding: 12px 20px;
+    border-radius: 16px;
+    max-width: 60%;
+    position: relative;
+    font-size: 15px;
+    line-height: 1.8;
+    word-wrap: break-word;
+}
+
+.user-message {
+    margin-right: auto;
+    margin-left: 0;
+    background-color: #eee;
+    text-align: right;
+    border: 2px solid #ccc;
+    border-bottom-right-radius: 0;
+}
+
+.answered .user-message {
+    border-color: #4CAF50;
+    background-color: #eaffea;
+}
+
+.unanswered .user-message {
+    border-color: #999;
+    background-color: #f0f0f0;
+}
+
+.reply-message {
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: 30px;
+    background-color: #fffccc;
+    border: 1px solid #ffb800;
+    border-bottom-left-radius: 0;
+}
+
+.status-icon {
+    position: absolute;
+    bottom: 5px;
+    left: 8px;
+    font-size: 14px;
+    color: #4CAF50;
+}
+
+.messages-c {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 1.2rem;
+}
+
+.date-m {
+    margin-top: 10px;
+    color: darkgoldenrod;
+}
+
+.owner-m {
+    margin-bottom: 10px;
+}
+
+#admin-m {
+    color: darkgoldenrod;
+}
+/*==========================================================*/
+@media (max-width: 768px) {
+    .user-message, .reply-message{
+        max-width: 100%;
+    }
+}

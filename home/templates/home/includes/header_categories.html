@@ -1,0 +1,51 @@
+<ul class="main-menu">
+    {% for category in categories %}
+        <li class="main-menu-item">
+            <a href="{% url 'product_list_page' %}?category={{ category.slug }}">
+                {{ category.title }}
+                {% if category.children %}
+                    <span class="toggle-arrow">▼</span>
+                {% endif %}
+            </a>
+
+            {% if category.children %}
+                <ul class="submenu">
+                    {% for child in category.children %}
+                        <li class="submenu-item">
+                            <a href="{% url 'product_list_page' %}?category={{ child.slug }}">
+                                {{ child.title }}
+                                {% if child.children %}
+                                    <span class="toggle-arrow">▼</span>
+                                {% endif %}
+                            </a>
+
+                            {% if child.children %}
+                                <ul class="sub-submenu">
+                                    {% for subchild in child.children %}
+                                        <li>
+                                            <a href="{% url 'product_list_page' %}?category={{ subchild.slug }}">
+                                                {{ subchild.title }}
+                                                {% if subchild.children %}
+                                                    <span class="toggle-arrow">▼</span>
+                                                {% endif %}
+                                            </a>
+                                            {% if subchild.children %}
+                                                <ul class="sub-submenu">
+                                                    {% for subsubchild in subchild.children %}
+                                                        <li>
+                                                            <a href="{% url 'product_list_page' %}?category={{ subsubchild.slug }}">{{ subsubchild.title }}</a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

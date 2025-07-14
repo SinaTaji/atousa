@@ -1,0 +1,13 @@
+{% for cat in categories %}
+    <li class="dropdown-item {% if cat.children %}has-children{% endif %}">
+        <div class="category-filter" data-category-slug="{{ cat.slug }}" role="button" tabindex="0">
+            {{ cat.title }}
+        </div>
+        {% if cat.children %}
+            <span class="arrow"> >> </span>
+            <ul class="sub-menu">
+                {% include 'products/partials/_category_list.html' with categories=cat.children %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}

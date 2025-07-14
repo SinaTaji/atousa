@@ -1,0 +1,25 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/categories.css' %}">
+{% endblock %}
+{% block title %}
+    دسته‌بندی ها | فروشگاه آتوسا
+{% endblock %}
+
+{% block description %}
+    همه دسته‌بندی‌های لباس با کیفیت بالا و قیمت مناسب را در فروشگاه آتوسا ببینید. شامل لباس دخترانه، پسرانه، تابستانی،
+    زمستانی و ...
+{% endblock %}
+{% block og_title %}دسته‌بندی لباس کودک | فروشگاه آتوسا{% endblock %}
+{% block og_description %}همه دسته‌های لباس کودک در فروشگاه آتوسا با طراحی شیک و قیمت مناسب. ارسال سریع به سراسر
+    ایران.{% endblock %}
+{% block og_image %}{% static 'image/fav/android-chrome-512x512.png' %}{% endblock %}
+{% block content %}
+    <div id="categories-t">
+        <h1>دسته بندی ها</h1>
+    </div>
+    <div>{% include 'products/partials/_cat_partial.html' with categorya=categorya %}</div>
+
+{% endblock %}

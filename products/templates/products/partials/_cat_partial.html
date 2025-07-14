@@ -1,0 +1,20 @@
+<div class="containerc" id="containerc-mobile">
+    <div class="category-grid mobile-v">
+        {% for cat in categorya %}
+            {% if cat.image %}
+                <a href="{% url 'product_list_page' %}?category={{ cat.slug }}" class="category-link"
+                   title="نمایش محصولات {{ cat.title }}">
+                    <div class="category-boxes">
+                        <div class="text">
+                            <h2>{{ cat.title }}</h2>
+                            <p>Atossa</p>
+                        </div>
+                        <img src="{{ cat.image.url }}" alt="دسته‌بندی {{ cat.title }} - فروشگاه آتوسا" class="image"
+                             loading="lazy">
+                    </div>
+                <h2 class="mobile-v-t">{{ cat.title }}</h2>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
