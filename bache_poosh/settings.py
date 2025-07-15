@@ -5,12 +5,12 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
-CSRF_TRUSTED_ORIGINS = ['https://atousa.liara.run']
+CSRF_TRUSTED_ORIGINS = ['*']
 LOGIN_URL = '/user/login'
 DEBUG = config('DEBUG', cast=bool)
 MERCHANT_ID = config('MERCHANT_ID')
 CALLBACK_URL = config('CALLBACK_URL')
-ALLOWED_HOSTS = ['atousa.liara.run']
+ALLOWED_HOSTS = ['*','atousa.liara.run']
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
