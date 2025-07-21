@@ -2,9 +2,11 @@
 <header class="main-header">
     <div id="header">
         <div id="logo-bar">
+        {% cache 600000 "logo" %}
             <a href="{% url 'home' %}"><img src="/static/image/logo.png" alt="لوگو" class="logo-img desktop"/></a>
             <a href="{% url 'home' %}"><img src="/static/image/icons/forms.png" alt="لوگو" class="logo-img mobile"
                                             id="logo-img-mobile"/></a>
+        {% endcache %}
             <div class="header-left">
                 <div id="cart-pro-mobile">
                     <a class="cart-head" href="{% url 'user_panel_page' %}"> <img src="/static/image/icons/user-m.svg"
@@ -14,7 +16,8 @@
                     <a class="cart-head" href="{% url 'orders:cart_detail_page' %}"><img
                             src="/static/image/icons/cart.svg"
                             alt="لباس بچه">
-                         <span class="cart-count" id="cart-count" {% if cart_item_count == 0 %}style="display: none;"{% endif %}>
+                        <span class="cart-count" id="cart-count"
+                              {% if cart_item_count == 0 %}style="display: none;"{% endif %}>
                 {{ cart_item_count }}
             </span>
                     </a>
@@ -53,9 +56,15 @@
 
                 <!-- منوی موبایل -->
                 <nav class="mobile-menu" id="mobileMenu">
-                    <div id="login-btn">
-                        <a href="{% url 'user_login_page' %}">ثبت نام / ورود</a>
-                    </div>
+                    {% if request.user.is_authenticated %}
+                        <div id="login-btn">
+                            <a href="{% url 'user_panel_page' %}">پنل کاربری</a>
+                        </div>
+                    {% else %}
+                        <div id="login-btn">
+                            <a href="{% url 'user_login_page' %}">ثبت نام / ورود</a>
+                        </div>
+                    {% endif %}
                     <ul class="menu-list">
                         <div>
                             <form id="search-form-mobile" method="get" action="{% url 'product_list_page' %}"
@@ -71,7 +80,7 @@
                             </form>
                             <div class="search-suggestions" id="search-suggestions-burger"></div>
                         </div>
-                        {% cache 60000 "home_static" %}
+                        {% cache 600000 "home_static" %}
                             <div class="head_access">
                                 <a href="{% url 'product_list_page' %}?gender=girls">
                                     <div class="category-box box-1">
@@ -156,28 +165,31 @@
             <nav class="navbar">
                 <a href="{% url 'home' %}"> خانه <img src="/static/image/icons/home-svgrepo-com%20(1).svg"
                                                       alt="لباس بچه"></a>
-                <a href="{% url 'aboutus_page' %}"> درباره ما <img src="/static/image/icons/about-us.svg"
-                                                                   alt="لباس بچه"></a>
-                <a href="{% url 'contact_us_page' %}"> تماس با ما <img src="/static/image/icons/contact.svg"
-                                                                       alt="لباس بچه"></a>
-                <a href="{% url 'article_list_page' %}"> مجله آتوسا <img src="/static/image/icons/article.svg"
-                                                                         alt="لباس بچه"></a>
-                {% if part %}
-                    <a href="{% url 'partner_dashboard_page' %}"> پنل همکار <img
-                            src="/static/image/icons/hand-shake.svg"
-                            alt="لباس بچه"> </a>
-                {% else %}
-                    <a href="{% url 'partner_register_page' %}"> همکاری با آتوسا <img
-                            src="/static/image/icons/hand-shake.svg"
-                            alt="لباس بچه"> </a>
-                {% endif %}
+                <div class="custom-dropdown-wrapper">
+                    <button class="custom-dropdown-btn">درباره ما</button>
+                    <div class="custom-dropdown-content">
+                        <a class="dropdown-link" href="{% url 'aboutus_page' %}"> درباره فروشگاه آتوسا <img
+                                src="/static/image/icons/about-us.svg"
+                                alt="لباس بچه"></a>
+                        <a class="dropdown-link" href="{% url 'contact_us_page' %}"> تماس با ما <img
+                                src="/static/image/icons/contact.svg"
+                                alt="لباس بچه"></a>
+                        {% if part %}
+                            <a class="dropdown-link" href="{% url 'partner_dashboard_page' %}"> پنل همکار <img
+                                    src="/static/image/icons/hand-shake.svg"
+                                    alt="لباس بچه"> </a>
+                        {% else %}
+                            <a class="dropdown-link" href="{% url 'partner_register_page' %}"> همکاری با آتوسا <img
+                                    src="/static/image/icons/hand-shake.svg"
+                                    alt="لباس بچه"> </a>
+                        {% endif %}
+                    </div>
+                </div>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
                         <a href="/atousa/admin/panel/sina1234/"> پنل مدیریت <img
                                 src="/static/image/icons/admin-with-cogwheels-svgrepo-com.svg" alt="لباس بچه"></a>
                     {% endif %}
-                {% else %}
-                    <a href="{% url 'user_login_page' %}">ثبت نام / ورود</a>
                 {% endif %}
             </nav>
         </div>

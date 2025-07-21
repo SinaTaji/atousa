@@ -2,6 +2,9 @@ function showLoader() {
     document.getElementById('global-loader').classList.remove('hidden');
 }
 
+function hideLoader() {
+    document.getElementById('global-loader').classList.add('hidden');
+}
 
 // اجرا بعد از بارگذاری کامل صفحه
 document.addEventListener("DOMContentLoaded", function () {
@@ -12,16 +15,19 @@ document.addEventListener("DOMContentLoaded", function () {
             if (form.id === "gift-code-form" || form.id === "search-form" || form.id === "search-form-mobile") {
                 return;
             }
-            // بررسی اعتبار فرم
+
             if (!form.checkValidity()) {
-                // فرم نامعتبره، لودر نشون نده
                 return;
             }
 
-            // فرم معتبره، لودر رو نشون بده
             showLoader();
         });
     });
+});
+
+// اگر کاربر با دکمه back برگشت، لودر رو مخفی کن
+window.addEventListener('pageshow', function (event) {
+    hideLoader();
 });
 document.addEventListener('DOMContentLoaded', function () {
     // همه فلش‌ها را انتخاب می‌کنیم با کلاس toggle-arrow

@@ -2,20 +2,31 @@ window.addEventListener("load", () => {
     const swiper = new Swiper('.mini-product-slider', {
         slidesPerView: 'auto',
         spaceBetween: 10,
+        freeModeMomentum: true,
         loop: true,
-        speed: 800,
+        touchRatio: 1,
+        touchAngle: 45,
+        simulateTouch: true,
+        shortSwipes: true,
+        longSwipes: true,
+        longSwipesRatio: 0.2,
+        longSwipesMs: 300,
+
+        resistance: true,
+        resistanceRatio: 0.5,
+
+        freeMode: false,
+
+        observer: true,
+        observeParents: true,
+        speed: 1000,
         autoplay: {
-            delay: 3000,
+            delay: 2000,
             disableOnInteraction: false,
         },
-        freeMode: false,
-        resistance: false,
-        touchRatio: 1.5,
         threshold: 5,
         allowTouchMove: true,
         watchSlidesProgress: true,
-
-        // بهبود کیفیت انتقال بین اسلایدها:
         slideToClickedSlide: true,
 
         // برای دسکتاپ فقط: ناوبری
@@ -26,7 +37,7 @@ window.addEventListener("load", () => {
 
         breakpoints: {
             0: {
-                spaceBetween: 20,
+                spaceBetween: 21,
             },
             769: {
                 spaceBetween: 30,

@@ -24,7 +24,7 @@ function handleScroll() {
     const currentScroll = window.scrollY;
 
     // برای هدر
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1020) {
         if (currentScroll > lastScrollHeader && currentScroll > 50) {
             header.style.transform = "translateY(-100%)";
         } else {
@@ -36,7 +36,7 @@ function handleScroll() {
     }
 
     // برای نوار فیلتر
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <=1020) {
         if (currentScroll > lastScrollBar) {
             bar.style.top = "0px";
         } else {
@@ -49,7 +49,7 @@ function handleScroll() {
 window.addEventListener("scroll", handleScroll);
 
 window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 1020) {
         header.style.transform = "translateY(0)";
         bar.style.top = "";
     }
@@ -145,7 +145,7 @@ function updateURL(filters, replace = false) {
 function getFiltersFromForm() {
     let form = document.getElementById('filter-form');
     const mobileForm = document.getElementById('filter-form-mobile');
-    if (window.innerWidth <= 768 && mobileForm) {
+    if (window.innerWidth <= 1020 && mobileForm) {
         form = mobileForm;
     }
 
@@ -185,7 +185,7 @@ function getFiltersFromForm() {
     }
 
     // *** اینجا اضافه می‌کنیم مقادیر موبایل اگر فرم موبایل فعال است ***
-    if (window.innerWidth <= 768 && mobileForm) {
+    if (window.innerWidth <= 1020 && mobileForm) {
         const colorMobile = document.getElementById('colorInputMobile');
         if (colorMobile && colorMobile.value) {
             filters.color = colorMobile.value;

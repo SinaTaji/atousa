@@ -1,7 +1,6 @@
 import requests
 from django.conf import settings
 import logging
-
 from django.urls import reverse
 
 logger = logging.getLogger(__name__)

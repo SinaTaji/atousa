@@ -10,7 +10,6 @@
             {% else %}
                 <img class="product-image" src="/static/image/boys.png" alt="لباس بچه">
             {% endif %}
-
             <div class="item-details">
                 <div class="item-name"><a href="{{ item.product_url }}">{{ item.product_title }}
                     {{ item.product_model }}</a>
@@ -45,8 +44,6 @@
                         <h2 id="no-stock">عدم موجودی</h2>
                     {% endif %}
                 </div>
-
-
             </div>
             <button class="remove-btn" data-variant-key="{{ item.variant_id }}">حذف</button>
         </div>

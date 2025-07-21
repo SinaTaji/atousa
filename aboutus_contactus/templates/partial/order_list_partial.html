@@ -89,11 +89,9 @@
                             <td data-label="تعداد :">{{ item.quantity }}</td>
                             <td data-label="قیمت کل :">{{ item.price|format_price }}</td>
                         </tr>
-                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-
                 <div class="invoice-summary">
                     <div><strong>جمع کل:</strong> {{ order.get_total_items_price|format_price }} </div>
                     <div><strong>هزینه ارسال:</strong>

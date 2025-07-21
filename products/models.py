@@ -93,7 +93,7 @@ class Size(models.Model):
         return f"{self.title} (برای {self.age_min} تا {self.age_max})"
 
     class Meta:
-        db_table = 'color'
+        db_table = 'sizes'
         verbose_name = 'سایز'
         verbose_name_plural = 'سایز ها'
         ordering = ['title']

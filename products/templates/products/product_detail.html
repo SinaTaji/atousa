@@ -43,11 +43,15 @@
                     <img id="main-product-image" src="{{ gallery_images.0 }}" alt="{{ product.title }}">
                 </div>
 
-                <div class="thumbnail-gallery">
-                    {% for img in gallery_images %}
-                        <img src="{{ img }}" class="thumbnail" data-image="{{ img }}"
-                             alt="تصویر {{ forloop.counter }} از {{ product.title }}">
-                    {% endfor %}
+                <div class="thumbnail-gallery-container">
+                    <button class="thumb-nav left">&larr;</button>
+                    <div class="thumbnail-gallery" id="thumbnailGallery">
+                        {% for img in gallery_images %}
+                            <img src="{{ img }}" class="thumbnail" data-image="{{ img }}"
+                                 alt="تصویر {{ forloop.counter }} از {{ product.title }}">
+                        {% endfor %}
+                    </div>
+                    <button class="thumb-nav right">&rarr;</button>
                 </div>
             </div>
 
@@ -201,9 +205,9 @@
         <div class="slider-wrapper">
             <div class="slider_d mobile-v-slider" id="similar_slider">
                 <h2>محصولات مشابه</h2>
-                <a href="{% url 'product_list_page' %}"><h5>مشاهده همه</h5><img
-                        src="/static/image/arrow.svg"
-                        alt="فلش مشاهده همه محصولات"></a>
+                <a href="{% url 'product_list_page' %}"><h5>مشاهده همه</h5><img class="desktop"
+                                                                                src="/static/image/arrow.svg"
+                                                                                alt="فلش مشاهده همه محصولات"></a>
             </div>
             <div class="sliders">
                 {% include 'products/partials/slider_cards_partial.html' with products=similar %}

@@ -5,8 +5,8 @@
 }
 
 .banner-img {
-    width: 1920px;
-    height: 460px;
+    width: 100%;
+    height: auto;
     display: block;
 }
 
@@ -29,7 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1600px;
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -196,9 +196,9 @@
     display: flex;
     margin-top: 70px;
     gap: 80px;
-    padding-bottom: 20px;
     justify-content: center;
     margin-bottom: 50px;
+    padding: 20px;
 }
 
 .discount-timer {
@@ -309,18 +309,21 @@
 .box-3 h2, .box-3 {
     border-bottom: 3px solid #00960c;
 }
-#magazine{
-    margin: 0 auto;
 
+#magazine {
+    margin: 0 auto;
+    padding: 10px;
 }
-#magazine img{
+
+#magazine img {
     margin: 0 auto;
     border-top-left-radius: 50px;
     border-bottom-right-radius: 20px;
     border: inset 3px #000000;
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.38);
 }
-@media (min-width: 768px) {
+
+@media (min-width: 1020px) {
     .banner-img.mobile {
         display: none;
     }
@@ -337,15 +340,19 @@
         display: none;
     }
 }
-
+@media (min-width: 1020px) and (max-width:1400px) {
+    .banner-img{
+        margin-top: 40px;
+    }
+}
 /*==========================================================*/
-@media (max-width: 768px) {
+@media (max-width: 1020px) {
     .banner-img.desktop {
         display: none;
     }
 
     .banner-img.mobile {
-        margin-top: 62px;
+        margin-top: 20px;
         width: 100%;
         height: auto;
     }
@@ -371,14 +378,17 @@
     }
 
     .head_access.mobile-v {
-        flex-direction: row !important;
-        margin-top: -8px !important;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         gap: 15px !important;
+        margin-top: 0;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 
     .mobile-v .category-box {
-        width: 75px !important;
-        height: 60px !important;
+        width: 21vw !important;
+        height: 12vw !important;
         border-radius: 20px !important;
         background: linear-gradient(to top, rgb(255, 255, 255), #ffc700);
     }
@@ -388,9 +398,8 @@
     }
 
     .mobile-v .image {
-        width: 100px !important;
-        height: 100px !important;
-        right: -10px !important;
+        width: 100% !important;
+        height: auto !important;
         left: 0 !important;
         bottom: 0 !important;
     }
@@ -410,24 +419,27 @@
 
     .mobile-v-t {
         text-align: center;
-        font-size: 15px;
+        font-size: 1.5rem;
         font-weight: 400;
         color: black;
         text-decoration: none;
-        margin-bottom: 20px;
+        margin-bottom: 20%;
         margin-top: 10px;
     }
-    .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after{
+
+    .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after {
         display: none;
     }
+
     #mobile-v-t {
+        text-align: center;
         position: absolute;
-        font-size: 14px;
+        font-size: 1rem;
         font-weight: 400;
         color: black;
         text-decoration: none;
-        top: 58px;
-        width: 100px;
+        top: 100%;
+        width: 100%;
         right: -9px;
         margin-bottom: 10px;
         margin-top: 10px;
@@ -440,17 +452,22 @@
     .category-grid.mobile-v {
         margin-top: 10px !important;
         gap: 15px !important;
+        padding: 10px;
+    }
+
+    .slider-banner-svg {
+        width: 200%;
     }
 
     .mobile-v .category-boxes {
         background: linear-gradient(to top, rgb(255, 255, 255), #ffc700);
-        width: 75px !important;
-        height: 60px !important;
+        width: 21vw !important;
+        height: 12vw !important;
         margin-bottom: 0 !important;
     }
 
-    #slider-banner-svg-mobile {
-        width: 900px;
+    .containerc {
+        padding: 0 !important;
     }
 
     .slider_d.mobile-v-slider {
@@ -475,16 +492,17 @@
         width: 100%;
         padding: 20px 0;
         overflow: hidden;
-        margin-right: 130px;
     }
 
     .mini-product-slider .swiper-wrapper {
         margin-top: 5px;
+        will-change: transform;
+        backface-visibility: hidden;
     }
 
     .mini-product-slider .swiper-slide {
         width: 180px !important;
-        margin: 0 !important;
+        margin: 4px !important;
     }
 
     .mobile-v-slider img {
@@ -496,7 +514,7 @@
     }
 
     .mobile-v-slider .global-discount-timer {
-        font-size: 20px;
+        font-size: 140%;
     }
 
     .swiper-slide {
@@ -506,7 +524,11 @@
     }
 
     .category-boxes .image:hover {
-        transform: none!important;
+        transform: none !important;
+    }
+
+    .swiper {
+        transform: translateZ(0); /* فعال‌سازی GPU */
     }
 
     .swiper,
@@ -514,18 +536,16 @@
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
         will-change: transform;
-        transform: translateZ(0); /* فعال‌سازی GPU */
+        margin-top: 10px;
     }
 
     .product-card {
         width: 170px;
         height: 375px;
         transition: none !important;
-        border-top-left-radius: 50px;
-        border-top: 3px rgba(255, 183, 0, 0.8) solid !important;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom: 1px solid silver;
+        border-radius: 5px;
+        border: 2px solid rgba(192, 192, 192, 0.27);
+        box-shadow: none;
     }
 
     .product-card:hover {
@@ -539,8 +559,8 @@
     }
 
     .product-image {
-        border-top-left-radius: 50px;
-        padding: 2px;
+        border-top-left-radius: 5px;
+        padding:3px 0;
     }
 
     .watermark {
@@ -574,7 +594,7 @@
     }
 
     .sliders-home {
-        gap: 20px;
+        gap: 5px;
     }
 
     #card_bottom {
@@ -582,7 +602,7 @@
     }
 
     #without_discount {
-        padding: 3px !important;
+        padding: 3px 10px !important;
         width: 170px;
         font-size: 18px;
         text-align: end;
@@ -594,21 +614,9 @@
         margin-right: 15px;
         font-size: 14px;
     }
-    #magazine img{
-        max-width: 100%;
 
+    #magazine img {
+        max-width: 100%;
         border-radius: 5px;
-    }
-}
-@media (min-width: 801px) and (max-width: 1399px) {
-    .banner-img{
-        width: 100%;
-        height: auto;
-    }
-    .banner-wrapper{
-        margin: 0;
-    }
-    .slider_d{
-        width: 100%;
     }
 }

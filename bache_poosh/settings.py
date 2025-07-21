@@ -2,15 +2,16 @@ import os
 from pathlib import Path
 from decouple import config
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = []
 LOGIN_URL = '/user/login'
 DEBUG = config('DEBUG', cast=bool)
 MERCHANT_ID = config('MERCHANT_ID')
 CALLBACK_URL = config('CALLBACK_URL')
-ALLOWED_HOSTS = ['*','atousa.liara.run']
+ALLOWED_HOSTS = ['*', 'atousa.liara.run']
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'bache_poosh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/mnt/atousa-disk/db.sqlite3',
     }
 }
 
@@ -123,14 +124,14 @@ NTFY_TOPIC = config('NTFY_TOPIC')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / '/static/'
+STATIC_ROOT = '/mnt/atousa-disk/static'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_ROOT = BASE_DIR / 'uploads'
-MEDIA_URL = '/medias/'
+MEDIA_ROOT = '/mnt/atousa-disk/media'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -140,7 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f"redis://{config('REDIS_HOST', default='localhost')}:{config('REDIS_PORT', default='6379')}/0",
+        'LOCATION': f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/0",
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }

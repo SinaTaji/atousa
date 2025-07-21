@@ -36,8 +36,8 @@ class Banner(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        cache.delete('homepage_banners')
+        cache.delete('banners')
 
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
-        cache.delete('homepage_banners')
+        cache.delete('banners')

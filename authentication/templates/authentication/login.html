@@ -8,7 +8,7 @@
 {% block content %}
     <section class="book" id="form_auth">
         <div id="form-ui">
-            <img id=cover_img src="/static/image/welcom.jpg"
+            <img class="desktop" id=cover_img src="/static/image/welcom.jpg"
                  alt="">
             <form action="{% url 'user_login_page' %}" method="post" id="form">
                 {% csrf_token %}

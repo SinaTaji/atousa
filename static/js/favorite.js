@@ -66,7 +66,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     showMessage({
                         type: "info",
                         text: "✅ محصول به علاقه‌مندی‌ها اضافه شد.",
-                        timeout: 5000
+                        timeout: 5000,
+                        buttons: [
+                            {
+                                text: "بستن",
+                                color: "rgba(103,51,65,0.68)",
+                                onClick: () => {
+                                        document.getElementById("custom-message-container").style.display = "none";
+                                    }
+                            },
+                            {
+                                text: "مشاهده",
+                                color: "rgba(87,119,133,0.87)",
+                                onClick: () => window.location.href = "/account/wishlist"
+                            }
+                        ]
                     });
                 } else if (data.status === "removed") {
                     icon.classList.remove("favorited");

@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (colorInput) colorInput.value = selectedColorId;
 
                     // ✅ اسکرول در موبایل
-                    if (window.innerWidth <= 768 && mainImage) {
+                    if (window.innerWidth <= 1020 && mainImage) {
                         mainImage.scrollIntoView({
                             behavior: 'smooth',
                             block: 'start'
@@ -378,5 +378,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) {
             closeModal();
         }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const mainImg = document.getElementById("main-product-image");
+    const thumbnails = document.querySelectorAll(".thumbnail");
+    const gallery = document.getElementById("thumbnailGallery");
+    const btnLeft = document.querySelector(".thumb-nav.left");
+    const btnRight = document.querySelector(".thumb-nav.right");
+
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener("click", function () {
+            mainImg.src = this.dataset.image;
+            thumbnails.forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+
+    const scrollAmount = 100;
+
+    btnLeft.addEventListener("click", () => {
+        gallery.scrollBy({left: -scrollAmount, behavior: 'smooth'});
+    });
+
+    btnRight.addEventListener("click", () => {
+        gallery.scrollBy({left: scrollAmount, behavior: 'smooth'});
     });
 });

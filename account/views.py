@@ -1,4 +1,8 @@
 import json
+
+from django.core.cache import cache
+
+from aboutus_contactus.context_processors import get_cache_key
 from .utils import update_partner_stats, promote_partner
 import jdatetime
 from django.contrib import messages
@@ -17,7 +21,9 @@ from .mixins import ActivePartnerRequiredMixin
 def wish_list(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if not request.user.is_authenticated:
+        cache_key = get_cache_key(request, 'wishlist_count')
         wishlist = request.session.get('wishlist', [])
+
         product_id_str = str(product_id)
         if product_id_str in wishlist:
             wishlist.remove(product_id_str)
@@ -25,11 +31,15 @@ def wish_list(request, product_id):
         else:
             wishlist.append(product_id_str)
             status = 'added'
+        cache.delete(cache_key)
         request.session['wishlist'] = wishlist
         return JsonResponse({'status': status, "source": "session"})
     obj, created = WishList.objects.get_or_create(user=request.user, product_id=product_id)
+    cache_key = get_cache_key(request, 'wishlist_count')
+    cache.delete(cache_key)
     if not created:
         obj.delete()
+        cache.delete(cache_key)
         return JsonResponse({"status": "removed", "source": "db"})
     return JsonResponse({"status": "added", "source": "db"})
 

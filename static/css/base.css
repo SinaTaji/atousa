@@ -110,6 +110,70 @@ section {
     font-size: 1.7rem;
 }
 
+.custom-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* خود دکمه */
+.custom-dropdown-btn {
+    background-color: unset;
+    color: #000;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-dropdown-btn:hover {
+    background-color: #e6b800;
+}
+
+.custom-dropdown-btn::after {
+    content: "";
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 4px;
+    transform: rotate(45deg);
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.custom-dropdown-wrapper:hover .custom-dropdown-btn::after {
+    transform: rotate(-135deg);
+}
+
+.custom-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+/* نمایش منو هنگام هاور روی والد */
+.custom-dropdown-wrapper:hover .custom-dropdown-content {
+    display: block;
+}
+
+/* آیتم‌های منو */
+.dropdown-link {
+    padding: 12px 18px!important;
+    transition: background-color 0.2s ease!important;
+}
+
+.dropdown-link:hover {
+    background-color: #ffd03a!important;
+    color: #000!important;
+}
 
 .main-header {
     width: 100%;
@@ -120,7 +184,8 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1600px;
+    width: 100%;
+    padding: 10px;
 }
 
 .custom-swiper-btn {
@@ -189,6 +254,7 @@ section {
 
 .bot-header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     background-color: #FFD03A;
     position: fixed;
@@ -199,18 +265,12 @@ section {
 }
 
 .header-right {
-    width: 40%;
     height: 47px;
     display: flex;
     justify-content: center;
     background-color: #FFD03A;
     border-radius: 15px;
 }
-
-.header-center {
-    width: 50%;
-}
-
 .header-left img {
     margin-left: 10px;
     padding: 2px;
@@ -236,7 +296,6 @@ section {
 }
 
 .navbar a {
-    font-weight: bold;
     padding: 5px 10px;
     font-size: 1rem;
     border-radius: 14px;
@@ -303,7 +362,6 @@ section {
     margin: 0;
     background: linear-gradient(to right, rgba(147, 147, 147, 0), rgba(0, 0, 0, 0.23), rgba(133, 133, 133, 0));
     direction: rtl;
-    border-radius: 15px;
     justify-content: center;
 }
 
@@ -1112,7 +1170,13 @@ a.fb:hover {
     color: darkgoldenrod;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 390px)and (max-width: 395px) {
+    .head_access.mobile-v {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 1020px) {
     .mobile-menu {
         display: none;
     }
@@ -1132,13 +1196,29 @@ a.fb:hover {
     #search-overlay {
         display: none;
     }
-    #product-code{
+
+    #product-code {
         color: silver;
     }
 }
 
+
 /*==========================================================*/
-@media (max-width: 768px) {
+@media (max-width: 1020px) {
+    .slider-banner-svg {
+        width: 200%;
+    }
+
+    .header-bg-img {
+        top: 65px;
+        position: absolute;
+    }
+
+    #logo-bar {
+        width: unset;
+        display: block;
+    }
+
     .bot-header {
         display: none;
     }
@@ -1164,13 +1244,16 @@ a.fb:hover {
         height: 58px;
     }
 
-    #header {
-        max-height: 65px;
+    .product-swiper {
+        max-width: 100%;
     }
 
-    .header-bg-img {
-        position: absolute;
-        top: 8%;
+    .mini-product-slider .swiper-wrapper {
+        will-change: transform;
+    }
+
+    #header {
+        height: 65px;
     }
 
     #search-input {
@@ -1238,13 +1321,13 @@ a.fb:hover {
         font-size: 1.2rem;
     }
 
+
     .head_access {
         display: flex;
         padding-bottom: 20px !important;
         justify-content: center;
         flex-direction: column;
         gap: 50px !important;
-        margin-top: 50px !important;
         margin-bottom: 0 !important;
     }
 
@@ -1577,6 +1660,7 @@ a.fb:hover {
 
     .search-overlay {
         position: fixed;
+        height: 100vh;
         inset: 0;
         background-color: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(4px);
@@ -1627,6 +1711,10 @@ a.fb:hover {
         border: none;
         outline: none;
         box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+    }
+
+    .slider-wrapper {
+        padding: 10px;
     }
 
     .support-btn {
@@ -1687,20 +1775,13 @@ a.fb:hover {
     a.b {
         padding: 20px 10px;
     }
-    #messages_count{
+
+    #messages_count {
         position: absolute;
         left: 40px;
     }
-    #success-pay-btns a{
-        font-size: 20px;
-    }
-}
-@media (min-width: 801px) and (max-width: 1399px) {
-    .navbar a{
-        font-size: 14px;
-    }
-    .bot-header{
-        height: 80px;
-    }
 
+    #success-pay-btns a {
+        font-size: 1.2rem;
+    }
 }

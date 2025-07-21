@@ -32,7 +32,7 @@ class Order(models.Model):
     ref_id = models.CharField(max_length=255, null=True, blank=True, verbose_name='شماره پیگیری پرداخت')
 
     class Meta:
-        ordering = ['-created', 'paid']
+        ordering = ['-created']
         db_table = 'orders'
         verbose_name = 'سفارش'
         verbose_name_plural = 'سفارشات'

@@ -17,6 +17,6 @@ __pycache__/
 # پوشه‌های آپلودی حجیم یا موقتی
 media/
 uploads/
-
+staticfiles/
 # اگر فولدر migrations خیلی بزرگه و نمی‌خوای دیپلوی شه:
 */migrations/__pycache__/

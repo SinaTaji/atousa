@@ -39,6 +39,8 @@ class ReplyContact(models.Model):
         ordering = ['created_at']
 
     def save(self, *args, **kwargs):
+        cache_key = f'{self.user.id}_messages_count'
+        cache.delete(cache_key)
         if not self.pk and self.reply_to:
             self.user = self.reply_to.user
         super().save(*args, **kwargs)

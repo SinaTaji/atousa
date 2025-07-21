@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleScroll() {
         const currentScroll = window.scrollY;
 
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1020) {
             if (currentScroll > lastScrollHeader && currentScroll > 50) {
                 header.style.transform = "translateY(-100%)";
             } else {
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("scroll", handleScroll);
 
     window.addEventListener("resize", () => {
-        if (window.innerWidth > 768) {
+        if (window.innerWidth > 1020) {
             header.style.transform = "translateY(0)";
             bar.style.top = "";
         }
