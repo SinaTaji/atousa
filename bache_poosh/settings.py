@@ -141,7 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/0",
+        'LOCATION': 'redis://:fcnzHtC1G2GIvgctCculdp4d@atousa-redis:6379/0',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
